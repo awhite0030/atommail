@@ -1,18 +1,30 @@
-# AtomMail
+<div align="center">
 
-Disposable email in 10 minutes. No sign-up, no tracking, no persistence.
+# ⚛️ AtomMail
+
+**Disposable email in 10 minutes. No sign-up, no tracking, no persistence.**
+
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![D1 Database](https://img.shields.io/badge/D1-SQLite-F38020?logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/d1/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-awhite0030%2Fatommail-181717?logo=github)](https://github.com/awhite0030/atommail)
+
+</div>
+
+---
 
 AtomMail generates a random `@atommail.cyou` address on demand, keeps it alive for exactly 10 minutes, then self-destructs — inbox, emails, and all. Built entirely on [Cloudflare Workers](https://workers.cloudflare.com/) with zero external dependencies beyond the edge.
 
-## How it works
+## ✨ How it works
 
-1. **Create** — click "Create Address" and get a random 8-character inbox (e.g. `xk7qm2p4@atommail.cyou`)
-2. **Receive** — anyone can send email to that address; it appears in the browser within seconds
-3. **Expire** — after 10 minutes the inbox is cleaned up automatically; no trace left
+1. 🆕 **Create** — click "Create Address" and get a random 8-character inbox (e.g. `xk7qm2p4@atommail.cyou`)
+2. 📩 **Receive** — anyone can send email to that address; it appears in the browser within seconds
+3. 💥 **Expire** — after 10 minutes the inbox is cleaned up automatically; no trace left
 
 That's it. No accounts, no cookies, no database that grows forever.
 
-## Architecture
+## 🏗️ Architecture
 
 ```
 Cloudflare Email Routing (catch-all)
@@ -31,13 +43,13 @@ Cloudflare Email Routing (catch-all)
 
 | Component | Purpose |
 |-----------|---------|
-| **Cloudflare Workers** | Single Worker handles both HTTP API and incoming email |
-| **Cloudflare D1** | SQLite at the edge — stores inboxes and emails |
-| **Cloudflare KV** | Permanent address tracking — prevents local-part reuse |
-| **Cloudflare Email Routing** | Catch-all rule forwards `*@atommail.cyou` to the Worker |
-| **`postal-mime`** | Parses raw RFC 2822 email streams into structured data |
+| 🤖 **Cloudflare Workers** | Single Worker handles both HTTP API and incoming email |
+| 🗄️ **Cloudflare D1** | SQLite at the edge — stores inboxes and emails |
+| 🔑 **Cloudflare KV** | Permanent address tracking — prevents local-part reuse |
+| 📬 **Cloudflare Email Routing** | Catch-all rule forwards `*@atommail.cyou` to the Worker |
+| ✉️ **`postal-mime`** | Parses raw RFC 2822 email streams into structured data |
 
-## API
+## 🛣️ API
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -49,15 +61,15 @@ Cloudflare Email Routing (catch-all)
 
 All endpoints return `application/json` with CORS headers (`Access-Control-Allow-Origin: *`).
 
-## Stack
+## 🧰 Stack
 
-- **Runtime**: Cloudflare Workers (TypeScript)
-- **Database**: D1 (SQLite at the edge)
-- **KV**: Address uniqueness guarantee
-- **Email**: Cloudflare Email Routing + `postal-mime`
-- **Frontend**: Vanilla HTML/CSS/JS — single-file SPA embedded in the Worker
+- 🤖 **Runtime**: Cloudflare Workers (TypeScript)
+- 🗄️ **Database**: D1 (SQLite at the edge)
+- 🔑 **KV**: Address uniqueness guarantee
+- 📬 **Email**: Cloudflare Email Routing + `postal-mime`
+- 🖥️ **Frontend**: Vanilla HTML/CSS/JS — single-file SPA embedded in the Worker
 
-## Getting started
+## 🚀 Getting started
 
 ### Prerequisites
 
@@ -119,7 +131,7 @@ After deploying, configure **Email Routing** in the Cloudflare dashboard:
 2. Add a **catch-all** rule that forwards to your Worker (`atommail`)
 3. Ensure MX records for `atommail.cyou` point to Cloudflare
 
-## Project structure
+## 📁 Project structure
 
 ```
 atommail/
@@ -135,14 +147,14 @@ atommail/
 └── package.json
 ```
 
-## Design decisions
+## 🧠 Design decisions
 
-- **Single Worker** — API and email handling share one deployment, one config
-- **KV for uniqueness** — addresses are permanently tracked so local parts are never reassigned
-- **Lazy cleanup** — expired inboxes are cleaned when email arrives for them, not via a cron job
-- **Embedded frontend** — the SPA is served directly from the Worker as a string constant; no separate Pages deployment needed
-- **Browser-only sessions** — no user accounts, no auth, no cookies; just a temporary address with a 10-minute TTL
+- 🧩 **Single Worker** — API and email handling share one deployment, one config
+- 🔑 **KV for uniqueness** — addresses are permanently tracked so local parts are never reassigned
+- 🧹 **Lazy cleanup** — expired inboxes are cleaned when email arrives for them, not via a cron job
+- 🖥️ **Embedded frontend** — the SPA is served directly from the Worker as a string constant; no separate Pages deployment needed
+- 🔒 **Browser-only sessions** — no user accounts, no auth, no cookies; just a temporary address with a 10-minute TTL
 
-## License
+## 📄 License
 
 [MIT](LICENSE)
