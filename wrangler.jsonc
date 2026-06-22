@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "atommail",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-05-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "atommail-db",
+      "database_id": "43a31667-936d-4b74-b068-d74b1b9f0745"
+    }
+  ],
+
+  "kv_namespaces": [
+    {
+      "binding": "ADDRESSES",
+      "id": "6aca5586b0fa4681a525607e9e752448"
+    }
+  ],
+
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "atommail",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "types": "wrangler types",
+    "db:migrate:local": "wrangler d1 execute atommail-db --local --file=./schema.sql",
+    "db:migrate:remote": "wrangler d1 execute atommail-db --remote --file=./schema.sql"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250620.0",
+    "typescript": "^5.7.0",
+    "wrangler": "^4.20.0"
+  },
+  "dependencies": {
+    "postal-mime": "^2.4.2"
+  }
+}
