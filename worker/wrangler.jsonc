@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "atommail-email-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-05-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "vars": {
+    "SUPABASE_URL": "https://qtycueqzbythkdpitkuq.supabase.co"
+  },
+
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+
+  "routes": [
+    {
+      "pattern": "*@atommail.cyou",
+      "zone_name": "atommail.cyou"
+    }
+  ]
+}

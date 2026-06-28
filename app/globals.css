@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #000000;
+  --fg: #ffffff;
+  --muted: #a1a1aa;
+  --card: #09090b;
+  --border: #27272a;
+  --accent: #ffffff;
+  --danger: #ef4444;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle selection color */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+}
+
+/* Ultra-minimal scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow utility for Pro tier */
+.glow-accent {
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.1),
+    0 0 40px -12px rgba(139, 92, 246, 0.25);
+}
+
+/* Inner glow on hover */
+.hover-inner-glow {
+  transition: box-shadow 0.3s ease;
+}
+.hover-inner-glow:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Email body content reset */
+.email-body a { color: #8b5cf6; }
+.email-body img { max-width: 100%; height: auto; }

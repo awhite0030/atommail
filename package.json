@@ -1,0 +1,31 @@
+{
+  "name": "atommail",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "worker:dev": "cd worker && wrangler dev",
+    "worker:deploy": "cd worker && wrangler deploy",
+    "db:migrate": "npx supabase db push supabase/schema.sql"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0",
+    "framer-motion": "^12.42.0",
+    "geist": "^1.7.2",
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.0"
+  }
+}
