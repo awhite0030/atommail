@@ -12,3 +12,6 @@ Disposable email service built on Cloudflare Workers. No sign-up, no tracking, n
 - Admin dashboard integration
 
 🚀 Updated for better onboarding!
+
+## TODO
+- Expand test coverage for worker routes (see #2)
