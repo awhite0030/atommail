@@ -4,14 +4,19 @@ Disposable email service built on Cloudflare Workers. No sign-up, no tracking, n
 
 ## Quick Start
 1. Clone the repo
-2. Deploy with wrangler or Vercel.
+2. `npm install`
+3. Deploy with `wrangler deploy` or similar.
 
 ## Features
 - Temporary inboxes
 - Privacy focused
-- Admin dashboard integration
+- Admin dashboard integration (see [atommail-admin](https://github.com/awhite0030/atommail-admin))
 
 🚀 Updated for better onboarding!
 
 ## TODO
 - Expand test coverage for worker routes (see #2)
+- Improve documentation
+
+## Contributing
+See open issues and feel free to submit PRs!
