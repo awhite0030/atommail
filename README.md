@@ -17,6 +17,7 @@ Disposable email service built on Cloudflare Workers. No sign-up, no tracking, n
 ## TODO
 - Expand test coverage for worker routes (see #2)
 - Improve documentation
+- Consider adding Docker support for local dev
 
 ## Contributing
-See open issues and feel free to submit PRs!
+See open issues and feel free to submit PRs! ❤️
