@@ -21,3 +21,6 @@ Disposable email service built on Cloudflare Workers. No sign-up, no tracking, n
 
 ## Contributing
 See open issues and feel free to submit PRs! ❤️
+
+## Recent Changes
+- Minor README polish for clarity.
