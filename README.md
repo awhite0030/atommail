@@ -25,3 +25,4 @@ See open issues and feel free to submit PRs! ❤️
 ## Recent Changes
 - Minor README polish for clarity.
 - Added badges for tech stack and deployment status.
+- Fixed a small typo in features list.
