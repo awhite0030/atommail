@@ -5,7 +5,7 @@ Disposable email service built on Cloudflare Workers. No sign-up, no tracking, n
 ## Quick Start
 1. Clone the repo
 2. `npm install`
-3. Deploy with `wrangler deploy` or similar.
+3. Deploy with `wrangler deploy` or Vercel.
 
 ## Features
 - Temporary inboxes
@@ -15,7 +15,7 @@ Disposable email service built on Cloudflare Workers. No sign-up, no tracking, n
 🚀 Updated for better onboarding!
 
 ## TODO
-- Expand test coverage for worker routes (see #2)
+- Expand test coverage for worker routes
 - Improve documentation
 - Consider adding Docker support for local dev
 
@@ -26,3 +26,4 @@ See open issues and feel free to submit PRs! ❤️
 - Minor README polish for clarity.
 - Added badges for tech stack and deployment status.
 - Fixed a small typo in features list.
+- Updated deployment note for Vercel compatibility.
