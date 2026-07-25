@@ -15,8 +15,8 @@ Disposable email service built on Cloudflare Workers. No sign-up, no tracking, n
 🚀 Updated for better onboarding!
 
 ## TODO
-- Expand test coverage for worker routes
-- Improve documentation
+- Expand test coverage for worker routes (especially edge cases)
+- Improve documentation with more examples
 - Consider adding Docker support for local dev
 
 ## Contributing
@@ -28,5 +28,6 @@ See open issues and feel free to submit PRs! ❤️
 - Fixed a small typo in features list.
 - Updated deployment note for Vercel compatibility.
 - Small wording tweak for consistency.
+- Clarified TODO priorities.
 
 ## Star us if you find it useful! ⭐
