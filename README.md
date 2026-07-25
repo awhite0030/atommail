@@ -7,6 +7,12 @@ Disposable email service built on Cloudflare Workers. No sign-up, no tracking, n
 2. `npm install`
 3. Deploy with `wrangler deploy` or Vercel.
 
+For local development:
+```bash
+npm install
+npx wrangler dev
+```
+
 ## Features
 - Temporary inboxes
 - Privacy focused
@@ -30,5 +36,6 @@ See open issues and feel free to submit PRs! ❤️
 - Small wording tweak for consistency.
 - Clarified TODO priorities.
 - Tiny cleanup in the features description.
+- Added local wrangler dev note.
 
 ## Star us if you find it useful! ⭐
