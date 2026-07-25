@@ -27,5 +27,6 @@ See open issues and feel free to submit PRs! ❤️
 - Added badges for tech stack and deployment status.
 - Fixed a small typo in features list.
 - Updated deployment note for Vercel compatibility.
+- Small wording tweak for consistency.
 
 ## Star us if you find it useful! ⭐
