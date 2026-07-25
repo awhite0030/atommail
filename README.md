@@ -29,5 +29,6 @@ See open issues and feel free to submit PRs! ❤️
 - Updated deployment note for Vercel compatibility.
 - Small wording tweak for consistency.
 - Clarified TODO priorities.
+- Tiny cleanup in the features description.
 
 ## Star us if you find it useful! ⭐
