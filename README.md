@@ -13,6 +13,8 @@ npm install
 npx wrangler dev
 ```
 
+Make sure your `wrangler.toml` has the required KV / D1 bindings for a basic smoke test.
+
 ## Features
 - Temporary inboxes
 - Privacy focused
@@ -37,5 +39,6 @@ See open issues and feel free to submit PRs! ❤️
 - Clarified TODO priorities.
 - Tiny cleanup in the features description.
 - Added local wrangler dev note.
+- Clarified wrangler.toml bindings note for local testing.
 
 ## Star us if you find it useful! ⭐
