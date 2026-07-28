@@ -15,7 +15,7 @@ npx wrangler dev
 
 Make sure your `wrangler.toml` has the required KV / D1 bindings for a basic smoke test. A minimal local setup usually just needs the bindings declared so the worker can start without runtime errors.
 
-Tip: if the worker fails to start locally, double-check that the binding names in `wrangler.toml` match what the code expects. This is the most common gotcha.
+Tip: if the worker fails to start locally, double-check that the binding names in `wrangler.toml` match what the code expects. This is the most common gotcha when getting started.
 
 ## Features
 - Temporary inboxes
@@ -46,5 +46,6 @@ See open issues and feel free to submit PRs! ❤️
 - Added a short tip about binding name mismatches.
 - Tiny wording polish in the local dev tip.
 - Small clarification on the most common local setup gotcha.
+- Slight wording improvement in the local setup tip.
 
 ## Star us if you find it useful! ⭐
