@@ -2,6 +2,8 @@
 
 Disposable email service built on Cloudflare Workers. No sign-up, no tracking, no persistence.
 
+Inboxes are temporary. Messages are automatically cleaned up after a short period and are never stored permanently.
+
 ## Quick Start
 1. Clone the repo
 2. `npm install`
@@ -33,6 +35,7 @@ Tip: if the worker fails to start locally, double-check that the binding names i
 See open issues and feel free to submit PRs! ❤️
 
 ## Recent Changes
+- Clarified temporary nature of inboxes and messages (TTL / cleanup).
 - Minor README polish for clarity.
 - Added badges for tech stack and deployment status.
 - Fixed a small typo in features list.
