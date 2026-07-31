@@ -48,5 +48,6 @@ See open issues and feel free to submit PRs! ❤️
 - Small clarification on the most common local setup gotcha.
 - Slight wording improvement in the local setup tip.
 - Another tiny clarity pass on the local tip.
+- Small wording polish on the local setup tip.
 
 ## Star us if you find it useful! ⭐
