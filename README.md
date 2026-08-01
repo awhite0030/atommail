@@ -52,5 +52,6 @@ See open issues and feel free to submit PRs! ❤️
 - Slight wording improvement in the local setup tip.
 - Another tiny clarity pass on the local tip.
 - Small wording polish on the local setup tip.
+- Tiny wording polish in the local setup tip.
 
 ## Star us if you find it useful! ⭐
