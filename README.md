@@ -55,5 +55,6 @@ See open issues and feel free to submit PRs! ❤️
 - Tiny wording polish in the local setup tip.
 - Clarified that cleanup timing is approximate and depends on the configured TTL.
 - Small note: exact TTL can vary slightly depending on worker schedule.
+- Tiny extra polish on the local setup tip wording.
 
 ## Star us if you find it useful! ⭐
