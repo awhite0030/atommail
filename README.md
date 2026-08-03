@@ -53,5 +53,6 @@ See open issues and feel free to submit PRs! ❤️
 - Another tiny clarity pass on the local tip.
 - Small wording polish on the local setup tip.
 - Tiny wording polish in the local setup tip.
+- Clarified that cleanup timing is approximate and depends on the configured TTL.
 
 ## Star us if you find it useful! ⭐
