@@ -58,5 +58,6 @@ See open issues and feel free to submit PRs! ❤️
 - Tiny extra polish on the local setup tip wording.
 - Tiny clarification on approximate inbox lifetime.
 - One more small clarity note on approximate lifetime.
+- Tiny extra polish on the local setup tip.
 
 ## Star us if you find it useful! ⭐
