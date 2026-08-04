@@ -2,7 +2,7 @@
 
 Disposable email service built on Cloudflare Workers. No sign-up, no tracking, no persistence.
 
-Inboxes are temporary. Messages are automatically cleaned up after a short period and are never stored permanently.
+Inboxes are temporary. Messages are automatically cleaned up after a short period and are never stored permanently. Exact lifetime depends on the configured TTL and can vary slightly depending on worker schedule.
 
 ## Quick Start
 1. Clone the repo
@@ -56,5 +56,6 @@ See open issues and feel free to submit PRs! ❤️
 - Clarified that cleanup timing is approximate and depends on the configured TTL.
 - Small note: exact TTL can vary slightly depending on worker schedule.
 - Tiny extra polish on the local setup tip wording.
+- Tiny clarification on approximate inbox lifetime.
 
 ## Star us if you find it useful! ⭐
