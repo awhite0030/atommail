@@ -57,5 +57,6 @@ See open issues and feel free to submit PRs! ❤️
 - Small note: exact TTL can vary slightly depending on worker schedule.
 - Tiny extra polish on the local setup tip wording.
 - Tiny clarification on approximate inbox lifetime.
+- One more small clarity note on approximate lifetime.
 
 ## Star us if you find it useful! ⭐
