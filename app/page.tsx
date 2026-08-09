@@ -226,7 +226,10 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen overflow-hidden bg-near-black text-almost-white">
+    <main className="atm-shell relative min-h-screen overflow-hidden bg-near-black text-almost-white">
+      <div className="atm-aurora" aria-hidden="true" />
+      <div className="atm-signal" aria-hidden="true" />
+      <div className="atm-scanlines" aria-hidden="true" />
       <nav className="sticky top-0 z-40 border-b border-ash/50 bg-[#333248]/70 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6">
           <a href="/" className="text-lg font-medium tracking-[-0.03em]">atom<span className="text-signal-violet">mail</span></a>
@@ -236,7 +239,7 @@ export default function Home() {
 
       <section className="mx-auto max-w-[1200px] px-6 pb-16 pt-20 sm:pb-24 sm:pt-28">
         <div className="grid items-end gap-14 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="max-w-3xl">
+          <div className="atm-hero-copy max-w-3xl">
             <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.18em] text-steel">private delivery station</p>
             <h1 className="max-w-2xl text-[clamp(3.5rem,9vw,7.25rem)] font-light leading-[0.82] tracking-[-0.055em]">
               Email for the <span className="font-display font-light italic">moment</span>
@@ -247,12 +250,12 @@ export default function Home() {
           </div>
 
           {!address ? (
-            <div className="rounded-cards border border-almost-white/20 bg-almost-white/[0.035] p-7 sm:p-10">
+            <div className="atm-panel rounded-cards border border-almost-white/20 bg-almost-white/[0.035] p-7 sm:p-10">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-soft-white">start a session</p>
               <h2 className="mt-5 text-3xl font-light tracking-[-0.03em]">Create a fresh inbox</h2>
               <p className="mt-3 text-sm leading-6 text-steel">No signup. Your address disappears automatically after ten minutes.</p>
               {error && <div className="mt-6 border border-red-400/40 bg-red-400/10 px-4 py-3 text-sm text-red-200">{error}</div>}
-              <button onClick={createInbox} disabled={loading} className="mt-8 w-full rounded-buttons bg-signal-violet px-4 py-4 text-sm font-medium text-near-black transition hover:bg-lavender-mist disabled:cursor-not-allowed disabled:opacity-50">
+              <button onClick={createInbox} disabled={loading} className="atm-cta mt-8 w-full rounded-buttons bg-signal-violet px-4 py-4 text-sm font-medium text-near-black transition hover:bg-lavender-mist disabled:cursor-not-allowed disabled:opacity-50">
                 {loading ? 'Creating address...' : 'Create address'}
               </button>
               <input type="text" name="website_url" tabIndex={-1} autoComplete="off" style={{ position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true" />
@@ -264,12 +267,12 @@ export default function Home() {
               <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.13em] text-ash">cloudflare protected · no tracking</p>
             </div>
           ) : (
-            <div className="rounded-cards border border-almost-white/20 bg-almost-white/[0.035] p-7 sm:p-10">
+            <div className="atm-panel rounded-cards border border-almost-white/20 bg-almost-white/[0.035] p-7 sm:p-10">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-soft-white">live address</p>
               <code className="mt-5 block break-all font-mono text-xl tracking-[-0.04em] sm:text-2xl">{address}</code>
               <div className="mt-8 flex items-center justify-between border-y border-almost-white/15 py-4">
                 <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel">expires in</span>
-                <span className={`font-mono text-2xl tabular-nums ${expired ? 'text-red-300' : 'text-signal-violet'}`}>{expired ? 'Expired' : timeLeft}</span>
+                <span className={`atm-status font-mono text-2xl tabular-nums ${expired ? 'text-red-300' : 'text-signal-violet'}`}>{expired ? 'Expired' : timeLeft}</span>
               </div>
               <div className="mt-6 grid grid-cols-2 gap-3">
                 <button onClick={copyAddress} className="rounded-buttons border border-almost-white bg-near-black px-4 py-3 text-sm transition hover:bg-almost-white hover:text-near-black">{copied ? 'Copied ✓' : 'Copy address'}</button>
@@ -312,7 +315,7 @@ export default function Home() {
           ['02', 'No archive', 'Messages vanish with the inbox.'],
           ['03', 'No clutter', 'One purpose. One temporary place.'],
         ].map(([number, title, description]) => (
-          <article key={number} className="border-t border-almost-white/15 py-6 sm:px-6 sm:first:pl-0">
+          <article key={number} className="atm-feature border-t border-almost-white/15 py-6 sm:px-6 sm:first:pl-0">
             <p className="font-mono text-[10px] tracking-[0.18em] text-signal-violet">{number}</p>
             <h3 className="mt-10 text-xl font-light tracking-[-0.02em]">{title}</h3>
             <p className="mt-3 max-w-xs text-sm leading-6 text-steel">{description}</p>
