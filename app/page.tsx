@@ -227,17 +227,15 @@ export default function Home() {
 
   return (
     <main className="atm-shell relative min-h-screen overflow-hidden bg-near-black text-almost-white">
-      <div className="atm-aurora" aria-hidden="true" />
-      <div className="atm-signal" aria-hidden="true" />
-      <div className="atm-scanlines" aria-hidden="true" />
-      <nav className="sticky top-0 z-40 border-b border-ash/50 bg-[#333248]/70 backdrop-blur-md">
+      <div className="atm-sky" aria-hidden="true"><div className="atm-clouds" /><div className="atm-flight" /></div>
+      <nav className="sticky top-0 z-40 border-b border-white/15 bg-[#10255e]/45 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6">
           <a href="/" className="text-lg font-medium tracking-[-0.03em]">atom<span className="text-signal-violet">mail</span></a>
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel">temporary inbox / 10 min</span>
         </div>
       </nav>
 
-      <section className="mx-auto max-w-[1200px] px-6 pb-16 pt-20 sm:pb-24 sm:pt-28">
+      <section className="mx-auto max-w-[1200px] px-6 pb-20 pt-24 sm:pb-28 sm:pt-32">
         <div className="grid items-end gap-14 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="atm-hero-copy max-w-3xl">
             <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.18em] text-steel">private delivery station</p>
@@ -250,7 +248,7 @@ export default function Home() {
           </div>
 
           {!address ? (
-            <div className="atm-panel rounded-cards border border-almost-white/20 bg-almost-white/[0.035] p-7 sm:p-10">
+            <div className="atm-panel rounded-cards border border-white/40 bg-[#293461]/30 p-7 sm:p-10">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-soft-white">start a session</p>
               <h2 className="mt-5 text-3xl font-light tracking-[-0.03em]">Create a fresh inbox</h2>
               <p className="mt-3 text-sm leading-6 text-steel">No signup. Your address disappears automatically after ten minutes.</p>
@@ -267,7 +265,7 @@ export default function Home() {
               <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.13em] text-ash">cloudflare protected · no tracking</p>
             </div>
           ) : (
-            <div className="atm-panel rounded-cards border border-almost-white/20 bg-almost-white/[0.035] p-7 sm:p-10">
+            <div className="atm-panel rounded-cards border border-white/40 bg-[#293461]/30 p-7 sm:p-10">
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-soft-white">live address</p>
               <code className="mt-5 block break-all font-mono text-xl tracking-[-0.04em] sm:text-2xl">{address}</code>
               <div className="mt-8 flex items-center justify-between border-y border-almost-white/15 py-4">
