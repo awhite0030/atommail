@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --bg: #000000;
-  --fg: #ffffff;
-  --muted: #a1a1aa;
-  --card: #09090b;
-  --border: #27272a;
-  --accent: #ffffff;
+  --bg: #090909;
+  --fg: #f7f9fa;
+  --muted: #828384;
+  --card: #090909;
+  --border: rgba(247, 249, 250, 0.2);
+  --accent: #af50ff;
   --danger: #ef4444;
 }
 
@@ -19,16 +19,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle selection color */
+/* Signal violet selection */
 ::selection {
-  background: rgba(139, 92, 246, 0.3);
+  background: rgba(175, 80, 255, 0.3);
 }
 
 /* Ultra-minimal scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+::-webkit-scrollbar-thumb { background: #423738; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #6b6b6b; }
 
 /* Smooth scroll */
 html {
@@ -37,27 +37,27 @@ html {
 
 /* Gradient text utility */
 .text-gradient {
-  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+  background: linear-gradient(180deg, #f7f9fa 0%, #828384 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Glow utility for Pro tier */
+/* Signal-violet glow, rationed to one feature at a time */
 .glow-accent {
   box-shadow:
-    0 0 0 1px rgba(139, 92, 246, 0.1),
-    0 0 40px -12px rgba(139, 92, 246, 0.25);
+    0 0 0 1px rgba(175, 80, 255, 0.1),
+    0 0 40px -12px rgba(175, 80, 255, 0.35);
 }
 
-/* Inner glow on hover */
+/* Hairline inner glow on hover, no shadows */
 .hover-inner-glow {
   transition: box-shadow 0.3s ease;
 }
 .hover-inner-glow:hover {
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(247, 249, 250, 0.1), 0 0 0 1px rgba(247, 249, 250, 0.15);
 }
 
 /* Email body content reset */
-.email-body a { color: #8b5cf6; }
+.email-body a { color: #af50ff; }
 .email-body img { max-width: 100%; height: auto; }

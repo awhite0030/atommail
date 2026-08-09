@@ -226,152 +226,122 @@ export default function Home() {
   };
 
   return (
-    <>
-      <header className="text-center py-16">
-        <h1 className="text-5xl font-bold tracking-tight mb-2">AtomMail</h1>
-        <p className="text-gray-500">Temporary Email — 10 minutes</p>
-      </header>
+    <main className="min-h-screen overflow-hidden bg-near-black text-almost-white">
+      <nav className="sticky top-0 z-40 border-b border-ash/50 bg-[#333248]/70 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6">
+          <a href="/" className="text-lg font-medium tracking-[-0.03em]">atom<span className="text-signal-violet">mail</span></a>
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel">temporary inbox / 10 min</span>
+        </div>
+      </nav>
 
-      <div className="container mx-auto max-w-2xl px-6">
-        {!address ? (
-          <div className="text-center space-y-6">
-            {error && (
-              <div className="bg-red-900/30 border border-red-700 text-red-300 px-4 py-3 rounded-lg text-sm">
-                {error}
-              </div>
-            )}
-
-            <button
-              onClick={createInbox}
-              disabled={loading}
-              className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition disabled:opacity-50"
-            >
-              {loading ? 'Creating...' : 'Create Address'}
-            </button>
-
-            {/* Honeypot field — invisible to humans, bots will fill it */}
-            <input
-              type="text"
-              name="website_url"
-              tabIndex={-1}
-              autoComplete="off"
-              style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
-              aria-hidden="true"
-            />
-
-            {/* Cloudflare Turnstile CAPTCHA */}
-            {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
-              <div className="flex justify-center">
-                <div
-                  className="cf-turnstile"
-                  data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
-                  data-theme="dark"
-                />
-              </div>
-            )}
-
-            <p className="text-xs text-gray-600 mt-4">
-              Protected by Cloudflare · No logs · No tracking
+      <section className="mx-auto max-w-[1200px] px-6 pb-16 pt-20 sm:pb-24 sm:pt-28">
+        <div className="grid items-end gap-14 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="max-w-3xl">
+            <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.18em] text-steel">private delivery station</p>
+            <h1 className="max-w-2xl text-[clamp(3.5rem,9vw,7.25rem)] font-light leading-[0.82] tracking-[-0.055em]">
+              Email for the <span className="font-display font-light italic">moment</span>
+            </h1>
+            <p className="mt-8 max-w-xl text-base font-light leading-7 text-steel sm:text-lg">
+              Make a private address in seconds. Receive what you need, then leave nothing behind.
             </p>
           </div>
-        ) : (
-          <>
-            {error && (
-              <div className="bg-red-900/30 border border-red-700 text-red-300 px-4 py-3 rounded-lg text-sm mb-6">
-                {error}
-              </div>
-            )}
-            
-            <div className="bg-[#111] border border-[#222] rounded-xl p-6 mb-6 flex items-center justify-between gap-4 animate-in fade-in slide-in-from-top-2 duration-400">
-              <code className="text-lg font-mono break-all">{address}</code>
-              <button
-                onClick={copyAddress}
-                className={`px-4 py-2 rounded-lg text-sm transition whitespace-nowrap ${
-                  copied
-                    ? 'bg-green-600 text-white'
-                    : 'bg-[#222] text-white hover:bg-[#333]'
-                }`}
-              >
-                {copied ? '✓ Copied' : 'Copy'}
-              </button>
-            </div>
 
-            <div className={`text-center text-2xl font-semibold mb-4 tabular-nums ${timeLeft === 'Expired' || expired ? 'text-red-400' : 'text-gray-500'}`}>
-              {expired ? 'Expired' : timeLeft}
-            </div>
-
-            <div className="flex gap-3 justify-center mb-6">
-              <button
-                onClick={refreshInbox}
-                className="bg-[#1a1a1a] text-white border border-[#222] px-6 py-2 rounded-full font-semibold hover:bg-[#252525] transition flex items-center gap-2"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                Refresh
+          {!address ? (
+            <div className="rounded-cards border border-almost-white/20 bg-almost-white/[0.035] p-7 sm:p-10">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-soft-white">start a session</p>
+              <h2 className="mt-5 text-3xl font-light tracking-[-0.03em]">Create a fresh inbox</h2>
+              <p className="mt-3 text-sm leading-6 text-steel">No signup. Your address disappears automatically after ten minutes.</p>
+              {error && <div className="mt-6 border border-red-400/40 bg-red-400/10 px-4 py-3 text-sm text-red-200">{error}</div>}
+              <button onClick={createInbox} disabled={loading} className="mt-8 w-full rounded-buttons bg-signal-violet px-4 py-4 text-sm font-medium text-near-black transition hover:bg-lavender-mist disabled:cursor-not-allowed disabled:opacity-50">
+                {loading ? 'Creating address...' : 'Create address'}
               </button>
-              <button
-                onClick={createInbox}
-                className="bg-transparent text-white border border-[#222] px-6 py-2 rounded-full font-semibold hover:bg-[#1a1a1a] transition"
-              >
-                New Address
-              </button>
-            </div>
-
-            <ul className="space-y-2">
-              {emails.length === 0 ? (
-                <li className="text-center text-gray-500 py-10">Waiting for emails...</li>
-              ) : (
-                emails.map(email => (
-                  <li
-                    key={email.id}
-                    onClick={() => viewEmail(email.id)}
-                    className="bg-[#111] border border-[#222] rounded-lg p-4 cursor-pointer hover:bg-[#1a1a1a] transition"
-                  >
-                    <div className="font-semibold text-sm">{email.sender}</div>
-                    <div className="text-gray-500 text-sm">{email.subject || '(no subject)'}</div>
-                    <div className="text-gray-600 text-xs mt-1">
-                      {new Date(email.received_at).toLocaleTimeString()}
-                    </div>
-                  </li>
-                ))
+              <input type="text" name="website_url" tabIndex={-1} autoComplete="off" style={{ position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true" />
+              {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                <div className="mt-5 flex justify-center">
+                  <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} data-theme="dark" />
+                </div>
               )}
+              <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.13em] text-ash">cloudflare protected · no tracking</p>
+            </div>
+          ) : (
+            <div className="rounded-cards border border-almost-white/20 bg-almost-white/[0.035] p-7 sm:p-10">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-soft-white">live address</p>
+              <code className="mt-5 block break-all font-mono text-xl tracking-[-0.04em] sm:text-2xl">{address}</code>
+              <div className="mt-8 flex items-center justify-between border-y border-almost-white/15 py-4">
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel">expires in</span>
+                <span className={`font-mono text-2xl tabular-nums ${expired ? 'text-red-300' : 'text-signal-violet'}`}>{expired ? 'Expired' : timeLeft}</span>
+              </div>
+              <div className="mt-6 grid grid-cols-2 gap-3">
+                <button onClick={copyAddress} className="rounded-buttons border border-almost-white bg-near-black px-4 py-3 text-sm transition hover:bg-almost-white hover:text-near-black">{copied ? 'Copied ✓' : 'Copy address'}</button>
+                <button onClick={createInbox} className="rounded-buttons border border-almost-white/20 bg-almost-white/[0.08] px-4 py-3 text-sm transition hover:bg-almost-white/15">New address</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {address && (
+        <section className="border-t border-almost-white/15 px-6 py-12 sm:py-16">
+          <div className="mx-auto max-w-[1200px]">
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel">inbox / {emails.length} messages</p>
+                <h2 className="mt-3 text-4xl font-light tracking-[-0.04em]">Incoming <span className="font-display italic">mail</span></h2>
+              </div>
+              <button onClick={refreshInbox} className="rounded-smallcontrols border border-almost-white/30 bg-almost-white/[0.08] px-4 py-2 text-sm transition hover:bg-almost-white/15">Refresh</button>
+            </div>
+            {error && <div className="mb-5 border border-red-400/40 bg-red-400/10 px-4 py-3 text-sm text-red-200">{error}</div>}
+            <ul className="border-y border-almost-white/15">
+              {emails.length === 0 ? (
+                <li className="py-16 text-center text-sm text-steel">Waiting for mail. This inbox checks automatically every few seconds.</li>
+              ) : emails.map(email => (
+                <li key={email.id} onClick={() => viewEmail(email.id)} className="group grid cursor-pointer gap-2 border-b border-almost-white/15 py-5 transition last:border-0 hover:bg-almost-white/[0.035] sm:grid-cols-[1fr_1.4fr_auto] sm:items-center sm:px-5">
+                  <span className="truncate text-sm font-medium">{email.sender}</span>
+                  <span className="truncate text-sm text-steel">{email.subject || '(no subject)'}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-ash">{new Date(email.received_at).toLocaleTimeString()}</span>
+                </li>
+              ))}
             </ul>
-          </>
-        )}
-      </div>
+          </div>
+        </section>
+      )}
+
+      <section className="mx-auto grid max-w-[1200px] gap-px px-6 py-20 sm:grid-cols-3 sm:py-28">
+        {[
+          ['01', 'No account', 'Start with an address, not a profile.'],
+          ['02', 'No archive', 'Messages vanish with the inbox.'],
+          ['03', 'No clutter', 'One purpose. One temporary place.'],
+        ].map(([number, title, description]) => (
+          <article key={number} className="border-t border-almost-white/15 py-6 sm:px-6 sm:first:pl-0">
+            <p className="font-mono text-[10px] tracking-[0.18em] text-signal-violet">{number}</p>
+            <h3 className="mt-10 text-xl font-light tracking-[-0.02em]">{title}</h3>
+            <p className="mt-3 max-w-xs text-sm leading-6 text-steel">{description}</p>
+          </article>
+        ))}
+      </section>
+
+      <footer className="border-t border-almost-white/15 px-6 py-6">
+        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-3 text-xs text-steel">
+          <span><span className="mr-2 text-almost-white">+</span>AtomMail / temporary email</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.12em]">automatic expiry · 10 min</span>
+        </div>
+      </footer>
 
       {selectedEmail && (
-        <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
-          onClick={() => setSelectedEmail(null)}
-        >
-          <div
-            className="bg-[#111] border border-[#222] rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-6 animate-in fade-in zoom-in-95 duration-300"
-            onClick={e => e.stopPropagation()}
-          >
-            <div className="flex justify-end mb-4">
-              <button
-                onClick={() => setSelectedEmail(null)}
-                className="bg-transparent text-white border border-[#222] px-4 py-2 rounded-full text-sm hover:bg-[#1a1a1a] transition"
-              >
-                Close
-              </button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-near-black/90 p-4 backdrop-blur-sm" onClick={() => setSelectedEmail(null)}>
+          <article className="max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-cards border border-almost-white/20 bg-near-black p-6 sm:p-10" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between gap-4 border-b border-almost-white/15 pb-5">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel">message detail</p>
+              <button onClick={() => setSelectedEmail(null)} className="rounded-smallcontrols border border-almost-white/30 px-3 py-2 text-xs transition hover:bg-almost-white hover:text-near-black">Close</button>
             </div>
-            <h2 className="text-xl font-semibold mb-2">{selectedEmail.subject || '(no subject)'}</h2>
-            <div className="text-gray-500 text-sm mb-4">
-              From: {selectedEmail.sender} · {new Date(selectedEmail.received_at).toLocaleString()}
+            <h2 className="mt-7 text-3xl font-light tracking-[-0.04em]">{selectedEmail.subject || '(no subject)'}</h2>
+            <p className="mt-4 text-sm text-steel">From {selectedEmail.sender} · {new Date(selectedEmail.received_at).toLocaleString()}</p>
+            <div className="email-body mt-8 border-t border-almost-white/15 pt-7 text-sm leading-7 text-almost-white">
+              {selectedEmail.body_html ? <div dangerouslySetInnerHTML={{ __html: sanitize(selectedEmail.body_html) }} /> : <pre className="whitespace-pre-wrap font-sans">{selectedEmail.body_text || ''}</pre>}
             </div>
-            <div className="border-t border-[#222] pt-4 leading-relaxed">
-              {selectedEmail.body_html ? (
-                <div dangerouslySetInnerHTML={{ __html: sanitize(selectedEmail.body_html) }} />
-              ) : (
-                <pre className="whitespace-pre-wrap text-sm">{selectedEmail.body_text || ''}</pre>
-              )}
-            </div>
-          </div>
+          </article>
         </div>
       )}
-    </>
+    </main>
   );
 }
