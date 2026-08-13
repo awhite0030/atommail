@@ -61,5 +61,6 @@ See open issues and feel free to submit PRs! ❤️
 - Tiny extra polish on the local setup tip.
 - Tiny wording polish in the local setup tip.
 - Slightly clarified the most common local setup gotcha again.
+- One more tiny note that lifetime is approximate by design.
 
 ## Star us if you find it useful! ⭐
