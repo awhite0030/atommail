@@ -28,6 +28,7 @@ Tip: if the worker fails to start locally, double-check that the binding names i
 - Expand test coverage for worker routes (especially edge cases)
 - Improve documentation with more examples
 - Consider adding Docker support for local dev
+- Empty-state message when an inbox has no messages yet (friendly “waiting for first email” note)
 
 ## Contributing
 See open issues and feel free to submit PRs! ❤️
@@ -36,5 +37,6 @@ See open issues and feel free to submit PRs! ❤️
 - Clarified that inbox lifetime is approximate and depends on the configured TTL / worker schedule.
 - Cleaned up older polish notes for readability.
 - Minor README polish for clarity.
+- Captured empty-state idea in the TODO list.
 
 ## Star us if you find it useful! ⭐
