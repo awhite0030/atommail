@@ -4,6 +4,8 @@ Disposable email service built on Cloudflare Workers. No sign-up, no tracking, n
 
 Inboxes are temporary. Messages are automatically cleaned up after a short period and are never stored permanently. Exact lifetime depends on the configured TTL and can vary slightly depending on worker schedule.
 
+Under heavy use or tight free-tier KV limits, some cleanup / write operations can start failing earlier than expected — keep an eye on the Cloudflare usage dashboard if you self-host.
+
 ## Quick Start
 1. Clone the repo
 2. `npm install`
@@ -36,6 +38,7 @@ After deploy, double-check that your KV and D1 bindings are correctly linked in 
 See open issues and feel free to submit PRs! ❤️
 
 ## Recent Changes
+- Added a short note about KV quota pressure and cleanup behavior.
 - Added a short post-deploy tip about verifying KV/D1 bindings.
 - Clarified that inbox lifetime is approximate and depends on the configured TTL / worker schedule.
 - Cleaned up older polish notes for readability.
