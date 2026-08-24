@@ -38,6 +38,7 @@ After deploy, double-check that your KV and D1 bindings are correctly linked in 
 See open issues and feel free to submit PRs! ❤️
 
 ## Recent Changes
+- Tiny README wording tweak for the local wrangler tip.
 - Added a short note about KV quota pressure and cleanup behavior.
 - Added a short post-deploy tip about verifying KV/D1 bindings.
 - Clarified that inbox lifetime is approximate and depends on the configured TTL / worker schedule.
