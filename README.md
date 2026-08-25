@@ -21,7 +21,7 @@ Make sure your `wrangler.toml` has the required KV / D1 bindings for a basic smo
 
 Tip: if the worker fails to start locally, double-check that the binding names in `wrangler.toml` match what the code expects — this is the most common gotcha when getting started.
 
-After deploy, double-check that your KV and D1 bindings are correctly linked in the Cloudflare dashboard — a missing binding is the most common reason the worker starts but returns errors.
+After deploy, double-check that your KV and D1 bindings are correctly linked in the Cloudflare dashboard — a missing binding is the most common reason the worker starts but returns errors. If something still looks off, the Worker logs usually surface the problem within a few seconds.
 
 ## Features
 - Temporary inboxes
@@ -38,6 +38,7 @@ After deploy, double-check that your KV and D1 bindings are correctly linked in 
 See open issues and feel free to submit PRs! ❤️
 
 ## Recent Changes
+- Tiny polish on the post-deploy bindings tip (mention Worker logs).
 - Tiny README wording tweak for the local wrangler tip.
 - Added a short note about KV quota pressure and cleanup behavior.
 - Added a short post-deploy tip about verifying KV/D1 bindings.
