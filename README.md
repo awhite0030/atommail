@@ -32,12 +32,13 @@ After deploy, double-check that your KV and D1 bindings are correctly linked in 
 - Expand test coverage for worker routes (especially edge cases)
 - Improve documentation with more examples
 - Consider adding Docker support for local dev
-- Empty-state message when an inbox has no messages yet (friendly “waiting for first email” note)
+- Friendly empty-state message when an inbox has no messages yet (“waiting for first email”)
 
 ## Contributing
 See open issues and feel free to submit PRs! ❤️
 
 ## Recent Changes
+- Tiny wording polish on the empty-state TODO note.
 - Tiny clarity tweak on the post-deploy Worker logs tip.
 - Tiny polish on the post-deploy Worker logs tip (mention migration issues).
 - Tiny clarity tweak on the post-deploy Worker logs tip.
