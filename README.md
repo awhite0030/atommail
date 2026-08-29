@@ -44,6 +44,7 @@ After deploy, double-check that your KV and D1 bindings are correctly linked in 
 See open issues and feel free to submit PRs! ❤️
 
 ## Recent Changes
+- Tiny clarity tweak on the TTL note.
 - Noted that inbox TTL is configurable via Worker/KV settings.
 - Captured docs idea about configurable TTL (#30).
 - Captured soft-warning-when-expiring idea (#28) in the TODO list.
