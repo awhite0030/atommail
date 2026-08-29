@@ -35,11 +35,13 @@ After deploy, double-check that your KV and D1 bindings are correctly linked in 
 - Friendly empty-state message when an inbox has no messages yet (“waiting for first email”)
 - Optional “last cleaned” hint on the empty inbox state (see #26)
 - Rough remaining lifetime next to the address (see #29)
+- Soft warning banner when inbox is about to expire (see #28)
 
 ## Contributing
 See open issues and feel free to submit PRs! ❤️
 
 ## Recent Changes
+- Captured soft-warning-when-expiring idea (#28) in the TODO list.
 - Captured remaining-lifetime idea (#29) in the TODO list.
 - Mentioned the empty-state “last cleaned” idea in the TODO list.
 - Tiny wording polish on the empty-state TODO note.
