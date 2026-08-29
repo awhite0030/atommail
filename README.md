@@ -4,6 +4,8 @@ Disposable email service built on Cloudflare Workers. No sign-up, no tracking, n
 
 Inboxes are temporary. Messages are automatically cleaned up after a short period and are never stored permanently. Exact lifetime depends on the configured TTL and can vary slightly depending on worker schedule.
 
+The default TTL is intentionally short. You can change it in your Worker configuration / KV settings if you want longer-lived inboxes for self-hosted instances.
+
 Under heavy use or tight free-tier KV limits, some cleanup / write operations can start failing earlier than expected — keep an eye on the Cloudflare usage dashboard if you self-host.
 
 ## Quick Start
@@ -36,11 +38,14 @@ After deploy, double-check that your KV and D1 bindings are correctly linked in 
 - Optional “last cleaned” hint on the empty inbox state (see #26)
 - Rough remaining lifetime next to the address (see #29)
 - Soft warning banner when inbox is about to expire (see #28)
+- Clarify in docs that inbox TTL is configurable (see #30)
 
 ## Contributing
 See open issues and feel free to submit PRs! ❤️
 
 ## Recent Changes
+- Noted that inbox TTL is configurable via Worker/KV settings.
+- Captured docs idea about configurable TTL (#30).
 - Captured soft-warning-when-expiring idea (#28) in the TODO list.
 - Captured remaining-lifetime idea (#29) in the TODO list.
 - Mentioned the empty-state “last cleaned” idea in the TODO list.
