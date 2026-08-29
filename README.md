@@ -6,6 +6,8 @@ Inboxes are temporary. Messages are automatically cleaned up after a short perio
 
 The default TTL is intentionally short. You can change it in your Worker configuration / KV settings if you want longer-lived inboxes for self-hosted instances.
 
+Note: with a very short TTL, inboxes can be cleaned up quite fast. The empty state is expected once the lifetime expires.
+
 Under heavy use or tight free-tier KV limits, some cleanup / write operations can start failing earlier than expected — keep an eye on the Cloudflare usage dashboard if you self-host.
 
 ## Quick Start
@@ -39,11 +41,13 @@ After deploy, double-check that your KV and D1 bindings are correctly linked in 
 - Rough remaining lifetime next to the address (see #29)
 - Soft warning banner when inbox is about to expire (see #28)
 - Clarify in docs that inbox TTL is configurable (see #30)
+- Note about expected empty state with very short TTLs (see #31)
 
 ## Contributing
 See open issues and feel free to submit PRs! ❤️
 
 ## Recent Changes
+- Tiny note about expected behavior with very short TTLs.
 - Tiny clarity tweak on the TTL note.
 - Noted that inbox TTL is configurable via Worker/KV settings.
 - Captured docs idea about configurable TTL (#30).
