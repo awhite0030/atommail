@@ -70,10 +70,24 @@ html {
 .email-body img { max-width: 100%; height: auto; border-radius: var(--r-sm); }
 .email-body table, .email-body td, .email-body tr { max-width: 100% !important; overflow-wrap: break-word; }
 
-/* 3D scene container */
+/* 3D scene: decorative layer — never intercept clicks, always behind content */
+.scene-holder {
+  pointer-events: none;
+  z-index: 0;
+}
 .scene-holder canvas {
   display: block;
+  pointer-events: none;
   touch-action: pan-y;
+}
+
+/* Page content always sits above the decorative scene */
+main > nav,
+main > section,
+main > footer,
+main > div.toast-viewport {
+  position: relative;
+  z-index: 1;
 }
 
 /* Touch devices: hover styles must not stick after tap */
