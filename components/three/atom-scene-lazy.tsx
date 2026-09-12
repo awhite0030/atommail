@@ -33,12 +33,27 @@ export default function AtomSceneLazy() {
 
   useEffect(() => {
     if (prefersReducedMotion() || isLowPowerDevice() || isPhoneViewport()) return
-    // Defer until the browser is idle so LCP is not blocked
-    const idle = (cb: () => void) =>
-      'requestIdleCallback' in window ? requestIdleCallback(cb) : setTimeout(cb, 400)
-    const id = idle(() => setShow(true))
+
+    // requestIdleCallback defers the scene past LCP, but it never fires
+    // for background tabs (and some WebViews stall it entirely) —
+    // a hard timeout guarantees the scene still arrives.
+    let done = false
+    const fire = () => {
+      if (done) return
+      done = true
+      setShow(true)
+    }
+    const fallback = setTimeout(fire, 900)
+    let ricId: number | undefined
+    if ('requestIdleCallback' in window) {
+      ricId = requestIdleCallback(fire)
+    }
     return () => {
-      if ('cancelIdleCallback' in window) cancelIdleCallback(id as number)
+      done = true
+      clearTimeout(fallback)
+      if (ricId !== undefined && 'cancelIdleCallback' in window) {
+        cancelIdleCallback(ricId)
+      }
     }
   }, [])
 

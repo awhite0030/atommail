@@ -42,7 +42,7 @@ function SwatchRow({ items }: { items: [string, string][] }) {
             className="h-16 rounded-md border border-ink/10"
             style={{ background: value }}
           />
-          <span className="font-mono text-micro uppercase tracking-label text-ink-faint">
+          <span className="font-mono text-micro uppercase tracking-label text-ink-mist">
             {name}
           </span>
         </div>

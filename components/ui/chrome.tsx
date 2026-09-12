@@ -81,9 +81,9 @@ export function Footer() {
           <Link href="/faq" className="grid min-h-11 place-items-start text-small text-ink-mist transition-fast hover:text-ink">FAQ</Link>
           <Link href="/privacy" className="grid min-h-11 place-items-start text-small text-ink-mist transition-fast hover:text-ink">Privacy</Link>
           <Link href="/about" className="grid min-h-11 place-items-start text-small text-ink-mist transition-fast hover:text-ink">About</Link>
-          <a href="/design" className="grid min-h-11 place-items-start text-small text-ink-faint transition-fast hover:text-ink">Design</a>
+          <a href="/design" className="grid min-h-11 place-items-start text-small text-ink-mist transition-fast hover:text-ink">Design</a>
         </nav>
-        <span className="font-mono text-micro uppercase tracking-label text-ink-faint sm:ml-auto">
+        <span className="font-mono text-micro uppercase tracking-label text-ink-mist sm:ml-auto">
           automatic expiry · 10 min
         </span>
       </div>

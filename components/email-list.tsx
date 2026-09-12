@@ -32,7 +32,7 @@ export function EmailList({
           >
             <span className="truncate text-body font-medium text-ink">{email.sender}</span>
             <span className="truncate text-body text-ink-mist">{email.subject || '(no subject)'}</span>
-            <span className="font-mono text-micro uppercase tracking-label text-ink-faint group-hover:text-ink">
+            <span className="font-mono text-micro uppercase tracking-label text-ink-mist group-hover:text-ink">
               {new Date(email.received_at).toLocaleTimeString()}
             </span>
           </li>
