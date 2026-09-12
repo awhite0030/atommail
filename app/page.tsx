@@ -9,7 +9,8 @@ import { ExpiredState } from '@/components/ui/states'
 import { ToastViewport, toast } from '@/components/ui/toast'
 import { InboxPanel } from '@/components/inbox-panel'
 import { EmailList, EmailModal } from '@/components/email-list'
-import { HeroIntro, Reveal } from '@/components/motion/reveal'
+import { HeroIntro, HeroStep, Reveal } from '@/components/motion/reveal'
+import { useSiteIntroPlaying } from '@/components/motion/site-intro'
 import { sanitizeEmailHtml } from '@/lib/sanitize'
 import { saveSession, clearSession, restoreSession } from '@/lib/session'
 import AtomSceneLazy from '@/components/three/atom-scene-lazy'
@@ -33,6 +34,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [expired, setExpired] = useState(false)
   const [error, setError] = useState('')
+  const introPlaying = useSiteIntroPlaying()
 
   // Восстановление адреса из localStorage
   useEffect(() => {
@@ -136,25 +138,33 @@ export default function Home() {
 
       <section className="mx-auto max-w-[1200px] px-6 pb-20 pt-20 sm:pb-28 sm:pt-28">
         <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-          <HeroIntro className="max-w-3xl">
-            <Badge tone="accent" className="mb-7">
-              private delivery station
-            </Badge>
-            <h1 className="font-display text-hero font-light text-ink">
-              Email for the <span className="italic">moment</span>
-            </h1>
-            <p className="mt-8 max-w-xl text-body leading-7 text-ink-mist sm:text-lg">
-              Make a private address in seconds. Receive what you need, then leave
-              nothing behind.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Badge>no signup</Badge>
-              <Badge>no archive</Badge>
-              <Badge>expires in 10 min</Badge>
-            </div>
+          <HeroIntro className="max-w-3xl" delay={introPlaying ? 1.6 : 0.2}>
+            <HeroStep>
+              <Badge tone="accent" className="mb-7">
+                private delivery station
+              </Badge>
+            </HeroStep>
+            <HeroStep>
+              <h1 className="font-display text-hero font-light text-ink">
+                Email for the <span className="italic">moment</span>
+              </h1>
+            </HeroStep>
+            <HeroStep>
+              <p className="mt-8 max-w-xl text-body leading-7 text-ink-mist sm:text-lg">
+                Make a private address in seconds. Receive what you need, then leave
+                nothing behind.
+              </p>
+            </HeroStep>
+            <HeroStep>
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Badge>no signup</Badge>
+                <Badge>no archive</Badge>
+                <Badge>expires in 10 min</Badge>
+              </div>
+            </HeroStep>
           </HeroIntro>
 
-          <Reveal delay={0.25} className="flex justify-center lg:justify-end">
+          <Reveal delay={introPlaying ? 2.2 : 0.5} y={34} className="flex justify-center lg:justify-end">
             <InboxPanel
               address={address}
               expiresAt={expiresAt}

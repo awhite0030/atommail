@@ -7,7 +7,7 @@ const easeOutSoft = [0.22, 1, 0.36, 1] as const
 
 /**
  * Scroll-triggered reveal: content rises in with a soft blur→sharp focus,
- * the signature of high-end product sites. Staggers children when asked.
+ * the signature of high-end product sites.
  */
 export function Reveal({
   children,
@@ -37,8 +37,40 @@ export function Reveal({
   )
 }
 
-/** Hero entrance: choreographed, not scroll-linked. */
+/**
+ * Hero entrance: choreographed on load — badge, headline, lead and chips
+ * settle in one after another, echoing the original site's staggered soft-in.
+ */
 export function HeroIntro({
+  children,
+  className,
+  delay = 0.2,
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+}) {
+  const reduced = useReducedMotion()
+
+  if (reduced) return <div className={className}>{children}</div>
+
+  return (
+    <motion.div
+      className={className}
+      initial="hidden"
+      animate="show"
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: 0.14, delayChildren: delay } },
+      }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+/** One step of the hero cascade — used inside HeroIntro. */
+export function HeroStep({
   children,
   className,
 }: {
@@ -52,9 +84,15 @@ export function HeroIntro({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 34, filter: 'blur(8px)' }}
-      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      transition={{ duration: 1.1, ease: easeOutSoft, delay: 0.15 }}
+      variants={{
+        hidden: { opacity: 0, y: 26, filter: 'blur(7px)' },
+        show: {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          transition: { duration: 0.85, ease: easeOutSoft },
+        },
+      }}
     >
       {children}
     </motion.div>
