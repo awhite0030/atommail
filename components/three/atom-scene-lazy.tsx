@@ -10,6 +10,14 @@ function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
+/** Phones rarely have the thermal budget for the scene; tablets and up do. */
+function isPhoneViewport() {
+  if (typeof window === 'undefined') return false
+  // Coarse pointer + narrow width = phone
+  const coarse = window.matchMedia('(pointer: coarse)').matches
+  return coarse && window.innerWidth < 768
+}
+
 function isLowPowerDevice() {
   if (typeof navigator === 'undefined') return false
   const cores = navigator.hardwareConcurrency ?? 8
@@ -18,13 +26,13 @@ function isLowPowerDevice() {
 
 /**
  * Loads the 3D atom only when the device can handle it comfortably;
- * otherwise the CSS gradient backdrop alone carries the visuals.
+ * otherwise the CSS backdrop alone carries the visuals.
  */
 export default function AtomSceneLazy() {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    if (prefersReducedMotion() || isLowPowerDevice()) return
+    if (prefersReducedMotion() || isLowPowerDevice() || isPhoneViewport()) return
     // Defer until the browser is idle so LCP is not blocked
     const idle = (cb: () => void) =>
       'requestIdleCallback' in window ? requestIdleCallback(cb) : setTimeout(cb, 400)
