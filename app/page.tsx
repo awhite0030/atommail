@@ -163,7 +163,7 @@ export default function Home() {
         className="pointer-events-none fixed inset-0 -z-10"
         style={{
           background:
-            'radial-gradient(ellipse 80% 55% at 50% 0%, rgba(109, 66, 222, 0.22) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 85% 20%, rgba(34, 211, 238, 0.12) 0%, transparent 65%), radial-gradient(ellipse 55% 40% at 12% 30%, rgba(244, 114, 182, 0.10) 0%, transparent 60%), var(--c-void)',
+            'radial-gradient(ellipse 80% 55% at 50% 0%, rgba(93, 109, 158, 0.16) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 85% 20%, rgba(95, 143, 163, 0.10) 0%, transparent 65%), radial-gradient(ellipse 55% 40% at 12% 30%, rgba(168, 120, 136, 0.08) 0%, transparent 60%), var(--c-void)',
         }}
       />
 

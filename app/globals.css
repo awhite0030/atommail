@@ -13,7 +13,7 @@ html {
 }
 
 ::selection {
-  background: rgba(139, 92, 246, 0.35);
+  background: rgba(125, 107, 181, 0.28);
   color: var(--c-prism-white);
 }
 

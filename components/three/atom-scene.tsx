@@ -27,14 +27,14 @@ function Core() {
         <icosahedronGeometry args={[1, 12]} />
         <MeshTransmissionMaterial
           thickness={0.9}
-          roughness={0.06}
+          roughness={0.08}
           transmission={1}
           ior={1.45}
-          chromaticAberration={0.28}
+          chromaticAberration={0.16}
           anisotropicBlur={0.3}
-          distortion={0.32}
+          distortion={0.28}
           distortionScale={0.4}
-          temporalDistortion={0.12}
+          temporalDistortion={0.08}
           samples={6}
           resolution={512}
         />
@@ -95,26 +95,26 @@ function OrbitRing({
 function AtomScene() {
   return (
     <>
-      <ambientLight intensity={0.35} />
-      <pointLight position={[6, 4, 6]} intensity={60} color="#8b5cf6" distance={30} />
-      <pointLight position={[-6, -3, -4]} intensity={40} color="#22d3ee" distance={30} />
-      <pointLight position={[0, 6, -6]} intensity={30} color="#f472b6" distance={30} />
+      <ambientLight intensity={0.5} />
+      <pointLight position={[6, 4, 6]} intensity={36} color="#9c8fc4" distance={30} />
+      <pointLight position={[-6, -3, -4]} intensity={26} color="#7793a8" distance={30} />
+      <pointLight position={[0, 6, -6]} intensity={18} color="#a88a96" distance={30} />
 
       <Core />
-      <OrbitRing radius={2.0} tilt={[1.15, 0.2, 0]} speed={0.7} phase={0} color="#8b5cf6" />
-      <OrbitRing radius={2.55} tilt={[1.9, -0.4, 0.3]} speed={0.5} phase={2.1} color="#22d3ee" />
-      <OrbitRing radius={3.1} tilt={[0.8, 0.5, -0.5]} speed={0.38} phase={4.2} color="#f472b6" />
+      <OrbitRing radius={2.0} tilt={[1.15, 0.2, 0]} speed={0.7} phase={0} color="#8d7fb8" />
+      <OrbitRing radius={2.55} tilt={[1.9, -0.4, 0.3]} speed={0.5} phase={2.1} color="#7793a8" />
+      <OrbitRing radius={3.1} tilt={[0.8, 0.5, -0.5]} speed={0.38} phase={4.2} color="#a88a96" />
 
       <Environment preset="night" />
 
       <EffectComposer enableNormalPass={false}>
         <Bloom
-          intensity={0.9}
-          luminanceThreshold={0.25}
-          luminanceSmoothing={0.5}
+          intensity={0.42}
+          luminanceThreshold={0.4}
+          luminanceSmoothing={0.6}
           mipmapBlur
         />
-        <Vignette eskil={false} offset={0.18} darkness={0.72} />
+        <Vignette eskil={false} offset={0.2} darkness={0.78} />
       </EffectComposer>
     </>
   )

@@ -7,42 +7,43 @@
 
 :root {
   /* ---------- Primitives: color ---------- */
-  /* Base surfaces — deep violet-tinted darks, never flat black */
-  --c-void: #06040d;
-  --c-abyss: #0a0716;
-  --c-deep: #100b24;
-  --c-crust: #171030;
-  --c-surface: #1c1338;
-  --c-raised: #241a4a;
+  /* Base surfaces — near-black with a warm graphite cast, like oiled steel */
+  --c-void: #0b0a0e;
+  --c-abyss: #121116;
+  --c-deep: #191722;
+  --c-crust: #221f2e;
+  --c-surface: #2a2635;
+  --c-raised: #353042;
 
-  /* Text ramp */
-  --c-prism-white: #f4f1ff;
-  --c-mist: #b9b3d6;
-  --c-dust: #8b84ab;
-  --c-faint: #5d5778;
+  /* Text ramp — warm paper tones against graphite */
+  --c-prism-white: #ecebe6;
+  --c-mist: #a9a7b0;
+  --c-dust: #7e7c88;
+  --c-faint: #57555f;
 
-  /* Iridescent spectrum stops (violet → cyan → pink) */
-  --c-iris-violet: #8b5cf6;
-  --c-iris-indigo: #6366f1;
-  --c-iris-cyan: #22d3ee;
-  --c-iris-teal: #2dd4bf;
-  --c-iris-pink: #f472b6;
-  --c-iris-amber: #fbbf24;
+  /* Iridescent spectrum — mineral tones as real glass catches low light:
+     deep amethyst, dusk sapphire, muted verdigris, antique rose, old gold */
+  --c-iris-violet: #7d6bb5;
+  --c-iris-indigo: #5b6d9e;
+  --c-iris-cyan: #5f8fa3;
+  --c-iris-teal: #6d8f8a;
+  --c-iris-pink: #a87888;
+  --c-iris-amber: #b09257;
 
   /* Hairlines & borders */
-  --c-hairline: rgba(244, 241, 255, 0.09);
-  --c-hairline-strong: rgba(244, 241, 255, 0.18);
-  --c-edge-glass: rgba(244, 241, 255, 0.14);
+  --c-hairline: rgba(236, 235, 230, 0.08);
+  --c-hairline-strong: rgba(236, 235, 230, 0.16);
+  --c-edge-glass: rgba(236, 235, 230, 0.12);
 
   /* Functional */
-  --c-danger: #fb7185;
-  --c-danger-deep: #7f1d2e;
-  --c-success: #34d399;
+  --c-danger: #b57878;
+  --c-danger-deep: #6e3434;
+  --c-success: #7d9c86;
 
   /* ---------- Semantic tokens ---------- */
   --bg: var(--c-void);
   --bg-elevated: var(--c-deep);
-  --panel: rgba(28, 19, 56, 0.55);
+  --panel: rgba(26, 23, 34, 0.62);
   --panel-solid: var(--c-surface);
   --fg: var(--c-prism-white);
   --fg-muted: var(--c-mist);
@@ -54,20 +55,20 @@
   --accent-cyan: var(--c-iris-cyan);
   --accent-pink: var(--c-iris-pink);
 
-  /* Iridescent gradient (buttons, timer, highlights) */
+  /* Iridescent gradient (buttons, timer, highlights) — glass over dusk light,
+     stops are close in value so it shimmers rather than flashes */
   --grad-iris: linear-gradient(
     115deg,
     var(--c-iris-violet) 0%,
-    var(--c-iris-indigo) 28%,
-    var(--c-iris-cyan) 55%,
-    var(--c-iris-teal) 72%,
+    var(--c-iris-indigo) 30%,
+    var(--c-iris-cyan) 62%,
     var(--c-iris-pink) 100%
   );
   --grad-iris-soft: linear-gradient(
     115deg,
-    rgba(139, 92, 246, 0.32) 0%,
-    rgba(34, 211, 238, 0.30) 50%,
-    rgba(244, 114, 182, 0.32) 100%
+    rgba(125, 107, 181, 0.30) 0%,
+    rgba(95, 143, 163, 0.26) 50%,
+    rgba(168, 120, 136, 0.30) 100%
   );
   --grad-text: linear-gradient(
     100deg,
@@ -76,11 +77,11 @@
     var(--c-iris-violet) 100%
   );
 
-  /* Glow shadows */
-  --glow-accent: 0 0 0 1px rgba(139, 92, 246, 0.14), 0 0 48px -14px rgba(139, 92, 246, 0.55);
-  --glow-cyan: 0 0 48px -14px rgba(34, 211, 238, 0.5);
-  --shadow-panel: 0 24px 80px -32px rgba(6, 4, 13, 0.9), 0 0 0 1px var(--c-edge-glass) inset;
-  --shadow-raised: 0 12px 40px -16px rgba(6, 4, 13, 0.85);
+  /* Glow shadows — restrained, felt more than seen */
+  --glow-accent: 0 0 0 1px rgba(125, 107, 181, 0.16), 0 0 42px -18px rgba(125, 107, 181, 0.38);
+  --glow-cyan: 0 0 42px -18px rgba(95, 143, 163, 0.34);
+  --shadow-panel: 0 24px 80px -32px rgba(11, 10, 14, 0.92), 0 0 0 1px var(--c-edge-glass) inset;
+  --shadow-raised: 0 12px 40px -16px rgba(11, 10, 14, 0.88);
 
   /* ---------- Typography ---------- */
   --font-display: var(--font-space-grotesk), 'Space Grotesk', ui-sans-serif, sans-serif;
