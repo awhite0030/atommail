@@ -27,8 +27,8 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, filter: 'blur(6px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.9, delay, ease: easeOutSoft }}
     >
@@ -81,15 +81,16 @@ export function HeroStep({
 
   if (reduced) return <div className={className}>{children}</div>
 
+  // No blur filter here: animated blur on large regions causes dark
+  // compositing artifacts on integrated GPUs.
   return (
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0, y: 26, filter: 'blur(7px)' },
+        hidden: { opacity: 0, y: 26 },
         show: {
           opacity: 1,
           y: 0,
-          filter: 'blur(0px)',
           transition: { duration: 0.85, ease: easeOutSoft },
         },
       }}

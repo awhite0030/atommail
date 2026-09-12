@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useMemo, useRef } from 'react'
+import { Suspense, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import {
   Environment,
@@ -90,8 +90,8 @@ function Core() {
           distortion={0.24}
           distortionScale={0.4}
           temporalDistortion={0.06}
-          samples={6}
-          resolution={512}
+          samples={4}
+          resolution={256}
         />
       </mesh>
     </Float>
@@ -146,7 +146,29 @@ function Electron({
   )
 }
 
-function AtomScene() {
+/** FPS guard: if the scene can't hold ~30fps, remove it entirely —
+ *  a flickering scene is worse than no scene. */
+function FpsGuard({ onFail }: { onFail: () => void }) {
+  const frames = useRef(0)
+  const t0 = useRef<number | null>(null)
+
+  useFrame(() => {
+    const now = performance.now()
+    if (t0.current === null) t0.current = now
+    frames.current++
+    const elapsed = now - t0.current
+    if (elapsed >= 4000) {
+      const fps = (frames.current * 1000) / elapsed
+      if (fps < 30) onFail()
+      t0.current = now
+      frames.current = 0
+    }
+  })
+
+  return null
+}
+
+function AtomScene({ onFail }: { onFail: () => void }) {
   return (
     <>
       <ambientLight intensity={1.1} />
@@ -176,11 +198,17 @@ function AtomScene() {
 
       <CameraDrift />
       <Environment preset="city" />
+      <FpsGuard onFail={onFail} />
     </>
   )
 }
 
 export default function AtomScene3D() {
+  // Emergency off-switch: the FPS guard flips this and unmounts the canvas
+  const [failed, setFailed] = useState(false)
+
+  if (failed) return null
+
   return (
     <div
       aria-hidden
@@ -188,11 +216,17 @@ export default function AtomScene3D() {
     >
       <Canvas
         camera={{ position: [0, 0.4, 7.2], fov: 42 }}
-        dpr={[1, 1.6]}
-        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        dpr={[1, 1.5]}
+        frameloop="always"
+        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance', preserveDrawingBuffer: false }}
+        onCreated={({ gl }) => {
+          // Fade the canvas in only after the first real frame —
+          // prevents the black-flash of an uninitialized drawing buffer
+          gl.setClearColor(0x000000, 0)
+        }}
       >
         <Suspense fallback={null}>
-          <AtomScene />
+          <AtomScene onFail={() => setFailed(true)} />
         </Suspense>
       </Canvas>
     </div>

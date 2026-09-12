@@ -64,11 +64,13 @@ export default function Home() {
     setLoading(true)
     setError('')
     try {
-      const turnstileToken = window.turnstile?.getResponse() ?? ''
+      const captchaToken = (!address && window.turnstile)
+        ? window.turnstile.getResponse() || ''
+        : ''
       const res = await fetch('/api/inbox', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ turnstileToken }),
+        body: JSON.stringify({ captchaToken }),
       })
       const data = await res.json()
       if (!res.ok) {
@@ -81,6 +83,8 @@ export default function Home() {
       setEmails([])
       saveSession(data.address, data.expiresAt)
       toast('Inbox ready', 'success')
+      // Reset the widget so a fresh token is required for the next address
+      window.turnstile?.reset()
     } catch (err) {
       console.error('Failed to create inbox:', err)
       setError('Network error. Please try again.')
