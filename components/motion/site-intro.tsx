@@ -21,7 +21,7 @@ export function useSiteIntroPlaying() {
     const seen = sessionStorage.getItem('atommail_intro_played')
     if (seen) return
     setPlaying(true)
-    const t = setTimeout(() => setPlaying(false), 1900)
+    const t = setTimeout(() => setPlaying(false), 1050)
     return () => clearTimeout(t)
   }, [reduced])
 
@@ -38,7 +38,7 @@ export function SiteIntro() {
     if (seen || reduced) return
     setShow(true)
     sessionStorage.setItem('atommail_intro_played', '1')
-    const t = setTimeout(() => setShow(false), 1900)
+    const t = setTimeout(() => setShow(false), 1050)
     return () => clearTimeout(t)
   }, [reduced])
 
@@ -51,7 +51,7 @@ export function SiteIntro() {
           key="intro"
           className="fixed inset-0 z-[100] grid place-items-center bg-ink"
           initial={{ y: 0 }}
-          exit={{ y: '-100%', transition: { duration: 0.85, ease: easeOutSoft } }}
+          exit={{ y: '-100%', transition: { duration: 0.6, ease: easeOutSoft } }}
           aria-hidden
         >
           <motion.div
@@ -59,7 +59,7 @@ export function SiteIntro() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.55, ease: easeOutSoft }}
+            transition={{ duration: 0.4, ease: easeOutSoft }}
           >
             {/* Minimal atom mark: core dot + two orbit strokes */}
             <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden>
@@ -95,7 +95,7 @@ export function SiteIntro() {
               className="font-display text-xl tracking-tight text-[#f1f1f1]"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15, ease: easeOutSoft }}
+              transition={{ duration: 0.35, delay: 0.1, ease: easeOutSoft }}
             >
               atommail
             </motion.span>

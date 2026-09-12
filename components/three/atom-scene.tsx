@@ -212,10 +212,13 @@ export default function AtomScene3D() {
   return (
     <div
       aria-hidden
-      className="scene-holder pointer-events-none fixed inset-0 z-scene opacity-80"
+      /* The atom sits in the air between the hero copy and the inbox panel:
+         offset right and up on wide screens, tucked behind on narrow ones. */
+      className="scene-holder pointer-events-none fixed z-scene opacity-80
+                 right-0 top-0 h-screen w-[62vw] translate-x-[18%] lg:w-[46vw] lg:translate-x-[6%]"
     >
       <Canvas
-        camera={{ position: [0, 0.4, 7.2], fov: 42 }}
+        camera={{ position: [0, 0.4, 9.2], fov: 40 }}
         dpr={[1, 1.5]}
         frameloop="always"
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance', preserveDrawingBuffer: false }}

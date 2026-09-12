@@ -77,7 +77,7 @@ export function InboxPanel({
           </div>
         )}
         <p className="mt-6 text-center">
-          <Label className="text-ink-faint">cloudflare protected · no tracking</Label>
+          <Label className="text-ink-mist">cloudflare protected · no tracking</Label>
         </p>
       </Panel>
     )

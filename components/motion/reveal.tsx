@@ -73,9 +73,12 @@ export function HeroIntro({
 export function HeroStep({
   children,
   className,
+  /** LCP step renders visible immediately; only non-critical steps hide. */
+  visible = false,
 }: {
   children: ReactNode
   className?: string
+  visible?: boolean
 }) {
   const reduced = useReducedMotion()
 
@@ -86,8 +89,9 @@ export function HeroStep({
   return (
     <motion.div
       className={className}
+      initial={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
       variants={{
-        hidden: { opacity: 0, y: 26 },
+        hidden: visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 },
         show: {
           opacity: 1,
           y: 0,

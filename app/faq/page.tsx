@@ -81,7 +81,7 @@ export default function FaqPage() {
           <Link href="/">
             <Button size="lg">Get a temporary address</Button>
           </Link>
-          <Label className="text-ink-faint">no signup · 10 minutes · zero traces</Label>
+          <Label className="text-ink-mist">no signup · 10 minutes · zero traces</Label>
         </div>
       </section>
       <Footer />

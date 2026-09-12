@@ -19,8 +19,10 @@
   /* Ink ramp — near-black with a soft warm cast */
   --c-ink: #231f20;
   --c-mist: #6b6862;
-  --c-dust: #8f8d88;
-  --c-faint: #c0bdb8;
+  /* mist == dust: dust's 8f8d88 fails WCAG AA text contrast on paper
+     (2.94:1); all text tones now >= 4.5:1 */
+  --c-dust: #6b6862;
+  --c-faint: #8f8d88;
 
   /* Organic spectrum — muted botanical tones, one at a time */
   --c-iris-violet: #7a6f7d;
@@ -37,8 +39,8 @@
 
   /* Functional */
   --c-danger: #a9554f;
-  --c-danger-deep: #7a3a35;
-  --c-success: #5a7a5e;
+  --c-danger-deep: #6e3434;
+  --c-success: #4a6b4e;
 
   /* ---------- Semantic tokens ---------- */
   --bg: var(--c-void);
