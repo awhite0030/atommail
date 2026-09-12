@@ -11,8 +11,8 @@ export interface TimerProps {
 const pad = (n: number) => String(n).padStart(2, '0')
 
 /**
- * The product's central component: a countdown with an iridescent
- * gradient that cools toward danger-red in the final minute.
+ * The product's central component: a plain ink countdown that
+ * turns danger-red in the final minute. No ornament.
  */
 export function Timer({ expiresAt, expired, onExpire }: TimerProps) {
   const [now, setNow] = useState(() => Date.now())
@@ -47,11 +47,7 @@ export function Timer({ expiresAt, expired, onExpire }: TimerProps) {
       role="timer"
       aria-live="off"
       aria-label={`${m} minutes ${s} seconds remaining`}
-      className={`iris-flow bg-clip-text font-mono text-h2 tabular-nums ${
-        urgent
-          ? 'text-danger [background:none] pulse-soft'
-          : 'bg-grad-iris text-transparent'
-      }`}
+      className={`font-mono text-h2 tabular-nums tracking-tight ${urgent ? 'text-danger pulse-soft' : 'text-ink'}`}
     >
       {pad(m)}:{pad(s)}
     </span>

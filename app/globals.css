@@ -4,8 +4,7 @@
 
 /* ------------------------------------------------------------------
  * AtomMail Design System — global styles
- * Component-level looks live in components/ui; this file holds only
- * resets, selection, scrollbar and a few cross-cutting utilities.
+ * Editorial light theme after heliasoils.com: paper, ink, air.
  * ------------------------------------------------------------------ */
 
 html {
@@ -13,70 +12,44 @@ html {
 }
 
 ::selection {
-  background: rgba(125, 107, 181, 0.28);
-  color: var(--c-prism-white);
+  background: rgba(35, 31, 32, 0.88);
+  color: #ffffff;
 }
 
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--c-raised); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--c-faint); }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--c-void); }
+::-webkit-scrollbar-thumb { background: var(--c-faint); border-radius: 999px; border: 2px solid var(--c-void); }
+::-webkit-scrollbar-thumb:hover { background: var(--c-dust); }
 
-/* Iridescent gradient text */
+/* The old gradient-text utility becomes plain ink */
 .text-iris {
-  background: var(--grad-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-style: italic;
 }
 
-/* Frosted glass panel */
+/* Elevated card: white surface with one soft drop shadow */
 .panel-glass {
   background: var(--panel);
-  backdrop-filter: blur(20px) saturate(1.3);
-  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   box-shadow: var(--shadow-panel);
 }
 
-/* Iridescent sweep that runs across gradient buttons on hover */
-.iris-sweep {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
+/* Buttons stay flat — a quick darken on hover is all the motion they get */
+.btn-flat {
+  transition: background-color var(--dur-fast) var(--ease-out-soft),
+    color var(--dur-fast) var(--ease-out-soft),
+    border-color var(--dur-fast) var(--ease-out-soft);
 }
-.iris-sweep::after {
-  content: '';
-  position: absolute;
-  inset: -40% auto -40% -30%;
-  width: 34%;
-  background: linear-gradient(100deg, transparent, rgba(244, 241, 255, 0.5), transparent);
-  transform: translateX(-160%) skewX(-16deg);
-  transition: none;
-}
-.iris-sweep:hover::after {
-  animation: iris-sweep 900ms var(--ease-out-soft);
-}
-@keyframes iris-sweep {
-  0% { transform: translateX(-160%) skewX(-16deg); }
-  60%, 100% { transform: translateX(420%) skewX(-16deg); }
+.btn-flat:hover {
+  background: #3a3435;
 }
 
-/* Animated iridescent gradient background shift (timer, accents) */
-.iris-flow {
-  background-size: 220% 220%;
-  animation: iris-flow 6s ease-in-out infinite;
-}
-@keyframes iris-flow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-/* Soft rise-in entrance */
+/* Rise-in entrance kept — but gentler, no blur theatrics */
 .rise-in {
   animation: rise-in var(--dur-slow) var(--ease-out-soft) both;
 }
 @keyframes rise-in {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -85,21 +58,15 @@ html {
   animation: pulse-soft 2.4s ease-in-out infinite;
 }
 @keyframes pulse-soft {
-  0%, 100% { opacity: 0.6; }
+  0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
 }
 
-/* Email body: incoming HTML is forced into the design system palette */
-.email-body { color: var(--c-prism-white); }
+/* Email body: incoming HTML forced into the paper palette */
+.email-body { color: var(--c-ink); }
 .email-body a { color: var(--c-iris-cyan); text-decoration: underline; text-underline-offset: 3px; }
 .email-body img { max-width: 100%; height: auto; border-radius: var(--r-sm); }
 .email-body table, .email-body td, .email-body tr { max-width: 100% !important; overflow-wrap: break-word; }
-
-/* 3D scene container */
-.scene-holder canvas {
-  display: block;
-  touch-action: pan-y;
-}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

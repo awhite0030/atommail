@@ -19,8 +19,8 @@ const config: Config = {
         crust: 'var(--c-crust)',
         surface: 'var(--c-surface)',
         raised: 'var(--c-raised)',
-        prism: {
-          DEFAULT: 'var(--c-prism-white)',
+        ink: {
+          DEFAULT: 'var(--c-ink)',
           mist: 'var(--c-mist)',
           dust: 'var(--c-dust)',
           faint: 'var(--c-faint)',

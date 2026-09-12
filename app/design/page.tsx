@@ -8,7 +8,7 @@ import { Timer } from '@/components/ui/timer'
 import { EmptyState, ExpiredState, ErrorState, SkeletonRows } from '@/components/ui/states'
 import { EmailList } from '@/components/email-list'
 
-const swatches: [string, string][] = [
+const surfaces: [string, string][] = [
   ['void', 'var(--c-void)'],
   ['abyss', 'var(--c-abyss)'],
   ['deep', 'var(--c-deep)'],
@@ -17,7 +17,7 @@ const swatches: [string, string][] = [
   ['raised', 'var(--c-raised)'],
 ]
 
-const iridescents: [string, string][] = [
+const organic: [string, string][] = [
   ['iris-violet', 'var(--c-iris-violet)'],
   ['iris-indigo', 'var(--c-iris-indigo)'],
   ['iris-cyan', 'var(--c-iris-cyan)'],
@@ -26,8 +26,8 @@ const iridescents: [string, string][] = [
   ['iris-amber', 'var(--c-iris-amber)'],
 ]
 
-const texts: [string, string][] = [
-  ['prism-white', 'var(--c-prism-white)'],
+const inks: [string, string][] = [
+  ['ink', 'var(--c-ink)'],
   ['mist', 'var(--c-mist)'],
   ['dust', 'var(--c-dust)'],
   ['faint', 'var(--c-faint)'],
@@ -39,10 +39,10 @@ function SwatchRow({ items }: { items: [string, string][] }) {
       {items.map(([name, value]) => (
         <div key={name} className="grid gap-2">
           <div
-            className="h-16 rounded-md border border-strong"
+            className="h-16 rounded-md border border-ink/10"
             style={{ background: value }}
           />
-          <span className="font-mono text-micro uppercase tracking-label text-prism-faint">
+          <span className="font-mono text-micro uppercase tracking-label text-ink-faint">
             {name}
           </span>
         </div>
@@ -53,8 +53,8 @@ function SwatchRow({ items }: { items: [string, string][] }) {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="border-t border-strong pt-10">
-      <Label className="text-iris-cyan">{title}</Label>
+    <section className="border-t border-ink/10 pt-10">
+      <Label className="text-ink">{title}</Label>
       <div className="mt-8">{children}</div>
     </section>
   )
@@ -66,48 +66,41 @@ export default function DesignPage() {
       <Navbar />
       <section className="mx-auto max-w-[1200px] space-y-16 px-6 pb-24 pt-20 sm:pt-28">
         <header>
-          <Badge tone="accent" className="mb-7">design system · v1</Badge>
-          <h1 className="font-display text-h1 font-light text-prism">
-            Prismatic <span className="text-iris italic">Atom</span>
+          <Badge tone="accent" className="mb-7">design system · v1.1</Badge>
+          <h1 className="font-display text-h1 font-light text-ink">
+            Paper & <span className="italic">Ink</span>
           </h1>
-          <p className="mt-6 max-w-xl text-body leading-7 text-prism-mist">
-            Living styleguide — the same tokens and components the product is
-            built from.
+          <p className="mt-6 max-w-xl text-body leading-7 text-ink-mist">
+            Living styleguide — editorial light theme. The same tokens and
+            components the product is built from.
           </p>
         </header>
 
         <Section title="colors · surfaces">
-          <SwatchRow items={swatches} />
+          <SwatchRow items={surfaces} />
         </Section>
 
-        <Section title="colors · iridescent spectrum">
-          <SwatchRow items={iridescents} />
+        <Section title="colors · organic tones">
+          <SwatchRow items={organic} />
         </Section>
 
-        <Section title="colors · text ramp">
-          <SwatchRow items={texts} />
-        </Section>
-
-        <Section title="gradient · iridescent">
-          <div
-            className="iris-flow h-20 rounded-lg border border-strong"
-            style={{ background: 'var(--grad-iris)' }}
-          />
+        <Section title="colors · ink ramp">
+          <SwatchRow items={inks} />
         </Section>
 
         <Section title="typography">
           <div className="grid gap-8">
             <div className="grid gap-2">
-              <Label>display · space grotesk</Label>
-              <p className="font-display text-hero font-light text-prism">Aa Email</p>
+              <Label>display · fraunces</Label>
+              <p className="font-display text-hero font-light text-ink">Aa Email</p>
             </div>
             <div className="grid gap-2">
               <Label>body · inter</Label>
-              <p className="text-h3 text-prism">Aa — The quick brown fox</p>
+              <p className="text-h3 text-ink">Aa — The quick brown fox</p>
             </div>
             <div className="grid gap-2">
               <Label>mono · ibm plex mono</Label>
-              <p className="font-mono text-body text-prism-mist">Aa 10:00 · x7kf@mail</p>
+              <p className="font-mono text-body text-ink-mist">Aa 10:00 · x7kf@mail</p>
             </div>
           </div>
         </Section>
@@ -140,7 +133,7 @@ export default function DesignPage() {
         <Section title="states">
           <div className="grid gap-8 lg:grid-cols-2">
             <Panel glass>
-              <ul className="border-y border-strong">
+              <ul className="border-y border-ink/10">
                 <EmptyState />
               </ul>
             </Panel>

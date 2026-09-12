@@ -51,10 +51,10 @@ export default function FaqPage() {
       <Navbar />
       <section className="mx-auto max-w-[840px] px-6 pb-24 pt-20 sm:pt-28">
         <Badge tone="accent" className="mb-7">questions</Badge>
-        <h1 className="font-display text-h1 font-light text-prism">
-          Frequently asked <span className="text-iris italic">questions</span>
+        <h1 className="font-display text-h1 font-light text-ink">
+          Frequently asked <span className="italic">questions</span>
         </h1>
-        <p className="mt-6 max-w-xl text-body leading-7 text-prism-mist">
+        <p className="mt-6 max-w-xl text-body leading-7 text-ink-mist">
           Everything about how the ten-minute inbox works.
         </p>
 
@@ -62,15 +62,15 @@ export default function FaqPage() {
           {faqs.map((f, i) => (
             <details
               key={i}
-              className="group border-t border-strong py-6 last:border-b open:bg-white/[0.02]"
+              className="group border-t border-strong py-6 last:border-b open:bg-ink/[0.02]"
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-body font-medium text-prism transition-fast [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-body font-medium text-ink transition-fast [&::-webkit-details-marker]:hidden">
                 {f.q}
-                <span className="font-mono text-micro uppercase tracking-label text-iris-violet transition-fast group-open:rotate-45">
+                <span className="font-mono text-micro uppercase tracking-label text-ink-mist transition-fast group-open:rotate-45">
                   +
                 </span>
               </summary>
-              <p className="mt-4 max-w-2xl text-body leading-7 text-prism-dust">{f.a}</p>
+              <p className="mt-4 max-w-2xl text-body leading-7 text-ink-mist">{f.a}</p>
             </details>
           ))}
         </div>
@@ -79,7 +79,7 @@ export default function FaqPage() {
           <Link href="/">
             <Button size="lg">Get a temporary address</Button>
           </Link>
-          <Label className="text-prism-faint">no signup · 10 minutes · zero traces</Label>
+          <Label className="text-ink-faint">no signup · 10 minutes · zero traces</Label>
         </div>
       </section>
       <Footer />

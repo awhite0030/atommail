@@ -38,12 +38,12 @@ export function ToastViewport() {
         <div
           key={t.id}
           role="status"
-          className={`rise-in panel-glass rounded-pill border px-5 py-2.5 font-mono text-micro uppercase tracking-label ${
+          className={`rise-in rounded-pill border bg-deep px-5 py-2.5 font-mono text-micro uppercase tracking-label shadow-raised ${
             t.tone === 'danger'
               ? 'border-danger/50 text-danger'
               : t.tone === 'success'
                 ? 'border-success/50 text-success'
-                : 'border-strong text-prism-mist'
+                : 'border-ink/15 text-ink'
           }`}
         >
           {t.message}

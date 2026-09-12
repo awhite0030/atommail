@@ -28,11 +28,11 @@ export function EmailList({
           <li
             key={email.id}
             onClick={() => onOpen(email.id)}
-            className="group grid cursor-pointer gap-2 border-b border-strong py-5 transition-fast last:border-0 hover:bg-white/[0.04] sm:grid-cols-[1fr_1.4fr_auto] sm:items-center sm:px-5"
+            className="group grid cursor-pointer gap-2 border-b border-strong py-5 transition-fast last:border-0 hover:bg-ink/[0.03] sm:grid-cols-[1fr_1.4fr_auto] sm:items-center sm:px-5"
           >
-            <span className="truncate text-body font-medium text-prism">{email.sender}</span>
-            <span className="truncate text-body text-prism-dust">{email.subject || '(no subject)'}</span>
-            <span className="font-mono text-micro uppercase tracking-label text-prism-faint group-hover:text-iris-cyan">
+            <span className="truncate text-body font-medium text-ink">{email.sender}</span>
+            <span className="truncate text-body text-ink-mist">{email.subject || '(no subject)'}</span>
+            <span className="font-mono text-micro uppercase tracking-label text-ink-faint group-hover:text-ink">
               {new Date(email.received_at).toLocaleTimeString()}
             </span>
           </li>
@@ -57,10 +57,10 @@ export function EmailModal({
             title={<Label>message detail</Label>}
             onClose={onClose}
           />
-          <h2 className="mt-7 font-display text-h2 font-light text-prism">
+          <h2 className="mt-7 font-display text-h2 font-light text-ink">
             {email.subject || '(no subject)'}
           </h2>
-          <p className="mt-4 text-small text-prism-dust">
+          <p className="mt-4 text-small text-ink-mist">
             From {email.sender} · {new Date(email.received_at).toLocaleString()}
           </p>
           <div className="email-body mt-8 border-t border-strong pt-7 text-body leading-7">

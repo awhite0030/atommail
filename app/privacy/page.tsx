@@ -49,10 +49,10 @@ export default function PrivacyPage() {
       <Navbar />
       <section className="mx-auto max-w-[840px] px-6 pb-24 pt-20 sm:pt-28">
         <Badge tone="accent" className="mb-7">privacy</Badge>
-        <h1 className="font-display text-h1 font-light text-prism">
-          Built to <span className="text-iris italic">forget</span>
+        <h1 className="font-display text-h1 font-light text-ink">
+          Built to <span className="italic">forget</span>
         </h1>
-        <p className="mt-6 max-w-xl text-body leading-7 text-prism-mist">
+        <p className="mt-6 max-w-xl text-body leading-7 text-ink-mist">
           The whole service is one privacy policy: minimal data, short life,
           permanent deletion.
         </p>
@@ -60,10 +60,10 @@ export default function PrivacyPage() {
         <div className="mt-16 grid gap-8">
           {sections.map((s) => (
             <Panel key={s.title} glass className="p-8 sm:p-10">
-              <Label className="text-iris-cyan">{s.title}</Label>
+              <Label className="text-ink">{s.title}</Label>
               <div className="mt-5 grid gap-4">
                 {s.body.map((p, i) => (
-                  <p key={i} className="max-w-2xl text-body leading-7 text-prism-mist">
+                  <p key={i} className="max-w-2xl text-body leading-7 text-ink-mist">
                     {p}
                   </p>
                 ))}

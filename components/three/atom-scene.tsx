@@ -6,35 +6,36 @@ import {
   Environment,
   Float,
   MeshTransmissionMaterial,
+  ContactShadows,
 } from '@react-three/drei'
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import * as THREE from 'three'
 
 /**
- * "Prismatic Atom": a glass core orbited by three iridescent electron
- * rings. The scene is decorative — pointer-events pass through it.
+ * "Glass atom": a crystal core orbited by three smoke-grey rings —
+ * a still-life object on the paper background, studio-lit. No bloom,
+ * no neon: the reference site's calm product photography, in 3D.
  */
 
 function Core() {
   const ref = useRef<THREE.Mesh>(null)
   useFrame((state) => {
     if (!ref.current) return
-    ref.current.rotation.y = state.clock.elapsedTime * 0.18
+    ref.current.rotation.y = state.clock.elapsedTime * 0.12
   })
   return (
-    <Float speed={1.4} rotationIntensity={0.35} floatIntensity={0.9}>
-      <mesh ref={ref} castShadow>
+    <Float speed={1.1} rotationIntensity={0.25} floatIntensity={0.7}>
+      <mesh ref={ref}>
         <icosahedronGeometry args={[1, 12]} />
         <MeshTransmissionMaterial
           thickness={0.9}
           roughness={0.08}
           transmission={1}
           ior={1.45}
-          chromaticAberration={0.16}
+          chromaticAberration={0.1}
           anisotropicBlur={0.3}
-          distortion={0.28}
+          distortion={0.24}
           distortionScale={0.4}
-          temporalDistortion={0.08}
+          temporalDistortion={0.06}
           samples={6}
           resolution={512}
         />
@@ -48,15 +49,12 @@ function OrbitRing({
   tilt,
   speed,
   phase,
-  color,
 }: {
   radius: number
   tilt: [number, number, number]
   speed: number
   phase: number
-  color: string
 }) {
-  const group = useRef<THREE.Group>(null)
   const electron = useRef<THREE.Mesh>(null)
 
   useFrame((state) => {
@@ -72,21 +70,14 @@ function OrbitRing({
   }, [radius])
 
   return (
-    <group ref={group} rotation={tilt}>
+    <group rotation={tilt}>
       <line>
         <primitive object={ringGeo} attach="geometry" />
-        <lineBasicMaterial color={color} transparent opacity={0.22} />
+        <lineBasicMaterial color="#8f8d88" transparent opacity={0.35} />
       </line>
       <mesh ref={electron}>
-        <sphereGeometry args={[0.075, 24, 24]} />
-        <meshPhysicalMaterial
-          color={color}
-          metalness={0.9}
-          roughness={0.15}
-          iridescence={1}
-          iridescenceIOR={1.8}
-          iridescenceThicknessRange={[120, 620]}
-        />
+        <sphereGeometry args={[0.07, 24, 24]} />
+        <meshPhysicalMaterial color="#231f20" roughness={0.35} metalness={0.1} />
       </mesh>
     </group>
   )
@@ -95,27 +86,18 @@ function OrbitRing({
 function AtomScene() {
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[6, 4, 6]} intensity={36} color="#9c8fc4" distance={30} />
-      <pointLight position={[-6, -3, -4]} intensity={26} color="#7793a8" distance={30} />
-      <pointLight position={[0, 6, -6]} intensity={18} color="#a88a96" distance={30} />
+      <ambientLight intensity={1.1} />
+      <directionalLight position={[4, 6, 4]} intensity={1.6} />
+      <directionalLight position={[-4, 2, -3]} intensity={0.5} color="#e8e6e3" />
 
       <Core />
-      <OrbitRing radius={2.0} tilt={[1.15, 0.2, 0]} speed={0.7} phase={0} color="#8d7fb8" />
-      <OrbitRing radius={2.55} tilt={[1.9, -0.4, 0.3]} speed={0.5} phase={2.1} color="#7793a8" />
-      <OrbitRing radius={3.1} tilt={[0.8, 0.5, -0.5]} speed={0.38} phase={4.2} color="#a88a96" />
+      <OrbitRing radius={2.0} tilt={[1.15, 0.2, 0]} speed={0.6} phase={0} />
+      <OrbitRing radius={2.55} tilt={[1.9, -0.4, 0.3]} speed={0.44} phase={2.1} />
+      <OrbitRing radius={3.1} tilt={[0.8, 0.5, -0.5]} speed={0.34} phase={4.2} />
 
-      <Environment preset="night" />
+      <ContactShadows position={[0, -3.4, 0]} opacity={0.18} scale={14} blur={2.6} far={5} color="#231f20" />
 
-      <EffectComposer enableNormalPass={false}>
-        <Bloom
-          intensity={0.42}
-          luminanceThreshold={0.4}
-          luminanceSmoothing={0.6}
-          mipmapBlur
-        />
-        <Vignette eskil={false} offset={0.2} darkness={0.78} />
-      </EffectComposer>
+      <Environment preset="city" />
     </>
   )
 }
@@ -124,7 +106,7 @@ export default function AtomScene3D() {
   return (
     <div
       aria-hidden
-      className="scene-holder pointer-events-none fixed inset-0 z-scene opacity-90"
+      className="scene-holder pointer-events-none fixed inset-0 z-scene opacity-80"
     >
       <Canvas
         camera={{ position: [0, 0.4, 7.2], fov: 42 }}

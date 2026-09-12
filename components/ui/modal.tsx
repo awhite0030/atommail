@@ -1,10 +1,11 @@
+'use client'
+
 import type { ReactNode } from 'react'
 
-/** Full-screen modal with glass overlay; closes on backdrop click or Escape. */
+/** Full-screen modal with paper overlay; closes on backdrop click or Escape. */
 export function Modal({
   open,
   onClose,
-  title,
   children,
 }: {
   open: boolean
@@ -16,7 +17,7 @@ export function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-modal grid place-items-center bg-void/85 p-4 backdrop-blur-md"
+      className="fixed inset-0 z-modal grid place-items-center bg-ink/25 p-4 backdrop-blur-[6px]"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -34,12 +35,12 @@ export function Modal({
 
 export function ModalHeader({ title, onClose }: { title: ReactNode; onClose: () => void }) {
   return (
-    <div className="flex items-start justify-between gap-4 border-b border-strong pb-5">
+    <div className="flex items-start justify-between gap-4 border-b border-ink/10 pb-5">
       {title}
       <button
         onClick={onClose}
         aria-label="Close"
-        className="rounded-sm border border-strong px-3 py-2 font-mono text-micro uppercase tracking-label text-prism-dust transition-fast hover:bg-white/[0.08] hover:text-prism"
+        className="rounded-pill border border-ink/20 px-4 py-1.5 font-mono text-micro uppercase tracking-label text-ink-mist transition-fast hover:border-ink hover:text-ink"
       >
         esc
       </button>

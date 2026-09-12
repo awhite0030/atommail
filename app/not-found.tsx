@@ -9,13 +9,11 @@ export default function NotFound() {
       <Navbar />
       <section className="mx-auto grid min-h-[60vh] max-w-[840px] place-items-center px-6 pb-24 pt-20">
         <div className="rise-in text-center">
-          <p className="iris-flow bg-grad-iris bg-clip-text font-display text-hero font-light text-transparent">
-            404
-          </p>
-          <h1 className="mt-6 font-display text-h2 font-light text-prism">
-            This page dissolved <span className="text-iris italic">early</span>.
+          <p className="font-display text-hero font-light italic text-ink">404</p>
+          <h1 className="mt-6 font-display text-h2 font-light text-ink">
+            This page dissolved <span className="italic">early</span>.
           </h1>
-          <p className="mx-auto mt-5 max-w-md text-body leading-7 text-prism-dust">
+          <p className="mx-auto mt-5 max-w-md text-body leading-7 text-ink-mist">
             Fitting for a temporary-mail service — but the page you wanted
             is gone or never existed.
           </p>
@@ -23,7 +21,7 @@ export default function NotFound() {
             <Link href="/">
               <Button size="lg">Back to the inbox</Button>
             </Link>
-            <Label className="text-prism-faint">everything here is temporary anyway</Label>
+            <Label className="text-ink-faint">everything here is temporary anyway</Label>
           </div>
         </div>
       </section>

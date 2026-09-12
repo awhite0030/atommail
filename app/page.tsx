@@ -155,17 +155,8 @@ export default function Home() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
+    <main className="relative min-h-screen">
       <AtomSceneLazy />
-      {/* CSS gradient backdrop — always present, 3D layers on top */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 -z-10"
-        style={{
-          background:
-            'radial-gradient(ellipse 80% 55% at 50% 0%, rgba(93, 109, 158, 0.16) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 85% 20%, rgba(95, 143, 163, 0.10) 0%, transparent 65%), radial-gradient(ellipse 55% 40% at 12% 30%, rgba(168, 120, 136, 0.08) 0%, transparent 60%), var(--c-void)',
-        }}
-      />
 
       <Navbar />
       <ToastViewport />
@@ -176,10 +167,10 @@ export default function Home() {
             <Badge tone="accent" className="mb-7">
               private delivery station
             </Badge>
-            <h1 className="font-display text-hero font-light text-prism">
-              Email for the <span className="text-iris italic">moment</span>
+            <h1 className="font-display text-hero font-light text-ink">
+              Email for the <span className="italic">moment</span>
             </h1>
-            <p className="mt-8 max-w-xl text-body font-light leading-7 text-prism-mist sm:text-lg">
+            <p className="mt-8 max-w-xl text-body leading-7 text-ink-mist sm:text-lg">
               Make a private address in seconds. Receive what you need, then leave
               nothing behind.
             </p>
@@ -208,9 +199,9 @@ export default function Home() {
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
               <div>
-                <Label className="text-iris-cyan">inbox / {emails.length} messages</Label>
-                <h2 className="mt-3 font-display text-h2 font-light text-prism">
-                  Incoming <span className="italic text-iris-violet">mail</span>
+                <Label>inbox / {emails.length} messages</Label>
+                <h2 className="mt-3 font-display text-h2 font-light text-ink">
+                  Incoming <span className="italic">mail</span>
                 </h2>
               </div>
               <Button variant="secondary" size="sm" onClick={refreshInbox}>
@@ -243,9 +234,9 @@ export default function Home() {
           ['03', 'No clutter', 'One purpose. One temporary place.'],
         ].map(([number, title, description]) => (
           <article key={number} className="rise-in border-t border-strong pt-6">
-            <span className="font-mono text-micro tracking-label text-iris-violet">{number}</span>
-            <h3 className="mt-6 font-display text-h3 font-light text-prism">{title}</h3>
-            <p className="mt-3 max-w-xs text-body leading-6 text-prism-dust">{description}</p>
+            <span className="font-mono text-micro tracking-label text-ink-dust">{number}</span>
+            <h3 className="mt-6 font-display text-h3 font-light text-ink">{title}</h3>
+            <p className="mt-3 max-w-xs text-body leading-6 text-ink-mist">{description}</p>
           </article>
         ))}
       </section>

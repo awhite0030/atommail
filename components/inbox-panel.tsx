@@ -44,10 +44,10 @@ export function InboxPanel({
     return (
       <Panel glass className="rise-in w-full max-w-md p-7 sm:p-9">
         <Label>start a session</Label>
-        <h2 className="mt-5 font-display text-h3 font-light text-prism">
+        <h2 className="mt-5 font-display text-h3 font-light text-ink">
           {expired ? 'Spin up a fresh inbox' : 'Create a fresh inbox'}
         </h2>
-        <p className="mt-3 text-small leading-6 text-prism-dust">
+        <p className="mt-3 text-small leading-6 text-ink-mist">
           No signup. Your address disappears automatically after ten minutes.
         </p>
         {error && <div className="mt-6"><ErrorState message={error} /></div>}
@@ -77,7 +77,7 @@ export function InboxPanel({
           </div>
         )}
         <p className="mt-6 text-center">
-          <Label className="text-prism-faint">cloudflare protected · no tracking</Label>
+          <Label className="text-ink-faint">cloudflare protected · no tracking</Label>
         </p>
       </Panel>
     )
@@ -85,8 +85,8 @@ export function InboxPanel({
 
   return (
     <Panel glass className="rise-in w-full max-w-md p-7 sm:p-9">
-      <Label className="text-iris-cyan">live address</Label>
-      <code className="mt-5 block break-all font-mono text-xl tracking-tight text-prism sm:text-2xl">
+      <Label className="text-ink-dust">live address</Label>
+      <code className="mt-5 block break-all font-mono text-xl tracking-tight text-ink sm:text-2xl">
         {address}
       </code>
 
