@@ -69,6 +69,13 @@ const config: Config = {
         base: 'var(--dur-base)',
         slow: 'var(--dur-slow)',
       },
+      zIndex: {
+        scene: 'var(--z-scene)',
+        content: 'var(--z-content)',
+        nav: 'var(--z-nav)',
+        modal: 'var(--z-modal)',
+        toast: 'var(--z-toast)',
+      },
       backgroundImage: {
         'grad-iris': 'var(--grad-iris)',
         'grad-iris-soft': 'var(--grad-iris-soft)',
