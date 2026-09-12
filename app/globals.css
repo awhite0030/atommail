@@ -68,6 +68,24 @@ html {
 .email-body img { max-width: 100%; height: auto; border-radius: var(--r-sm); }
 .email-body table, .email-body td, .email-body tr { max-width: 100% !important; overflow-wrap: break-word; }
 
+/* 3D scene container */
+.scene-holder canvas {
+  display: block;
+  touch-action: pan-y;
+}
+
+/* Touch devices: hover styles must not stick after tap */
+@media (hover: none) {
+  .btn-flat:hover {
+    background-color: revert-layer;
+  }
+}
+
+/* Horizontal scroll safety for long email addresses */
+code, .break-all {
+  overflow-wrap: anywhere;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
