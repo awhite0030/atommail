@@ -9,6 +9,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Grid blowout safety: nothing may cause horizontal scroll */
+  overflow-x: clip;
 }
 
 ::selection {

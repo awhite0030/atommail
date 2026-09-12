@@ -138,7 +138,7 @@ export default function Home() {
 
       <section className="mx-auto max-w-[1200px] px-6 pb-20 pt-20 sm:pb-28 sm:pt-28">
         <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-          <HeroIntro className="max-w-3xl" delay={introPlaying ? 1.6 : 0.2}>
+          <HeroIntro className="min-w-0 max-w-3xl" delay={introPlaying ? 1.6 : 0.2}>
             <HeroStep>
               <Badge tone="accent" className="mb-7">
                 private delivery station
@@ -164,7 +164,7 @@ export default function Home() {
             </HeroStep>
           </HeroIntro>
 
-          <Reveal delay={introPlaying ? 2.2 : 0.5} y={34} className="flex justify-center lg:justify-end">
+          <Reveal delay={introPlaying ? 2.2 : 0.5} y={34} className="flex min-w-0 justify-center lg:justify-end">
             <InboxPanel
               address={address}
               expiresAt={expiresAt}
