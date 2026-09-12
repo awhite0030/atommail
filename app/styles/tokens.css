@@ -1,0 +1,132 @@
+/*
+ * AtomMail Design System — Tokens
+ * Direction: editorial minimalism after heliasoils.com —
+ * warm paper background, ink text, generous whitespace,
+ * pill buttons, organic accent. No gradients, no glow.
+ * atommail-admin consumes the same file verbatim.
+ */
+
+:root {
+  /* ---------- Primitives: color ---------- */
+  /* Paper — warm off-whites, like unbleached cotton */
+  --c-void: #f1f1f1;
+  --c-abyss: #f6f6f5;
+  --c-deep: #ffffff;
+  --c-crust: #eceae7;
+  --c-surface: #ffffff;
+  --c-raised: #e6e4e1;
+
+  /* Ink ramp — near-black with a soft warm cast */
+  --c-ink: #231f20;
+  --c-mist: #6b6862;
+  --c-dust: #8f8d88;
+  --c-faint: #c0bdb8;
+
+  /* Organic spectrum — muted botanical tones, one at a time */
+  --c-iris-violet: #7a6f7d;
+  --c-iris-indigo: #5c6b74;
+  --c-iris-cyan: #4f7a72;
+  --c-iris-teal: #6f8a6e;
+  --c-iris-pink: #a9797b;
+  --c-iris-amber: #a08a5f;
+
+  /* Hairlines & borders */
+  --c-hairline: rgba(35, 31, 32, 0.10);
+  --c-hairline-strong: rgba(35, 31, 32, 0.22);
+  --c-edge-glass: rgba(35, 31, 32, 0.08);
+
+  /* Functional */
+  --c-danger: #a9554f;
+  --c-danger-deep: #7a3a35;
+  --c-success: #5a7a5e;
+
+  /* ---------- Semantic tokens ---------- */
+  --bg: var(--c-void);
+  --bg-elevated: var(--c-deep);
+  --panel: rgba(255, 255, 255, 0.72);
+  --panel-solid: var(--c-surface);
+  --fg: var(--c-ink);
+  --fg-muted: var(--c-mist);
+  --fg-subtle: var(--c-dust);
+  --fg-faint: var(--c-faint);
+  --border: var(--c-hairline);
+  --border-strong: var(--c-hairline-strong);
+  --accent: var(--c-ink);
+  --accent-cyan: var(--c-iris-cyan);
+  --accent-pink: var(--c-iris-pink);
+
+  /* No gradients — flat, honest surfaces (kept for compat, mapped flat) */
+  --grad-iris: linear-gradient(115deg, #231f20 0%, #231f20 100%);
+  --grad-iris-soft: linear-gradient(
+    115deg,
+    rgba(35, 31, 32, 0.05) 0%,
+    rgba(35, 31, 32, 0.03) 100%
+  );
+  --grad-text: none;
+
+  /* Shadows — single soft drop, no glow */
+  --glow-accent: 0 1px 0 rgba(35, 31, 32, 0.06);
+  --glow-cyan: none;
+  --shadow-panel: 0 12px 40px -24px rgba(35, 31, 32, 0.22);
+  --shadow-raised: 0 6px 24px -16px rgba(35, 31, 32, 0.18);
+
+  /* ---------- Typography ---------- */
+  /* Fraunces = editorial display with organic warmth (open-source Pitch analog);
+     Inter stays the quiet workhorse; mono keeps the technical labels */
+  --font-display: var(--font-fraunces), 'Fraunces', ui-serif, Georgia, serif;
+  --font-body: var(--font-inter), 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), 'IBM Plex Mono', ui-monospace, monospace;
+
+  --text-hero: clamp(3rem, 8vw, 6.5rem);
+  --text-h1: clamp(2.25rem, 5vw, 3.75rem);
+  --text-h2: clamp(1.75rem, 3.5vw, 2.5rem);
+  --text-h3: 1.25rem;
+  --text-body: 0.9375rem;
+  --text-small: 0.8125rem;
+  --text-micro: 0.6875rem;
+
+  --tracking-label: 0.22em;
+
+  /* ---------- Spacing scale (4px base) ---------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+  --sp-10: 128px;
+
+  /* ---------- Radii — pills are the signature ---------- */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  /* ---------- Motion ---------- */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 640ms;
+  --dur-scene: 1200ms;
+
+  /* ---------- Z-index ---------- */
+  --z-scene: 0;
+  --z-content: 10;
+  --z-nav: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0.01ms;
+    --dur-base: 0.01ms;
+    --dur-slow: 0.01ms;
+    --dur-scene: 0.01ms;
+  }
+}

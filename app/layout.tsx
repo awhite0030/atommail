@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter, IBM_Plex_Mono, Lora } from 'next/font/google'
+import { Inter, IBM_Plex_Mono, Fraunces } from 'next/font/google'
+import SmoothScroll from '@/components/smooth-scroll'
+import { SiteIntro } from '@/components/motion/site-intro'
+import './styles/tokens.css'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-whyte-inktrap', weight: ['300', '400', '500', '700'] })
-const plexMono = IBM_Plex_Mono({ subsets: ['latin'], variable: '--font-whyte-inktrap-mono', weight: ['400'] })
-const lora = Lora({ subsets: ['latin'], variable: '--font-grandslang', weight: ['400'], style: ['italic'] })
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', weight: ['300', '400', '500', '600'] })
+const plexMono = IBM_Plex_Mono({ subsets: ['latin'], variable: '--font-plex-mono', weight: ['400', '500'] })
+const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-fraunces', weight: ['300', '400', '500'], style: ['normal', 'italic'] })
 
 export const metadata: Metadata = {
   title: 'AtomMail — Temporary Email',
@@ -17,9 +20,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} ${plexMono.variable} ${lora.variable} min-h-screen bg-near-black text-almost-white font-sans antialiased`}>
-        {children}
+    <html lang="en">
+      <body className={`${inter.variable} ${plexMono.variable} ${fraunces.variable} min-h-screen bg-void font-sans text-ink antialiased`}>
+        <SiteIntro />
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   )

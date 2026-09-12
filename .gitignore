@@ -40,3 +40,5 @@ coverage
 .supabase
 
 .vercel
+.env.vercel
+storybook-static/

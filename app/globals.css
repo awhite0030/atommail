@@ -2,219 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg: #090909;
-  --fg: #f7f9fa;
-  --muted: #828384;
-  --card: #090909;
-  --border: rgba(247, 249, 250, 0.2);
-  --accent: #af50ff;
-  --danger: #ef4444;
-}
+/* ------------------------------------------------------------------
+ * AtomMail Design System — global styles
+ * Editorial light theme after heliasoils.com: paper, ink, air.
+ * ------------------------------------------------------------------ */
 
-body {
-  background: var(--bg);
-  color: var(--fg);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Signal violet selection */
-::selection {
-  background: rgba(175, 80, 255, 0.3);
-}
-
-/* Ultra-minimal scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #423738; border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: #6b6b6b; }
-
-/* Smooth scroll */
 html {
   scroll-behavior: smooth;
 }
 
-/* Gradient text utility */
-.text-gradient {
-  background: linear-gradient(180deg, #f7f9fa 0%, #828384 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+::selection {
+  background: rgba(35, 31, 32, 0.88);
+  color: #ffffff;
 }
 
-/* Signal-violet glow, rationed to one feature at a time */
-.glow-accent {
-  box-shadow:
-    0 0 0 1px rgba(175, 80, 255, 0.1),
-    0 0 40px -12px rgba(175, 80, 255, 0.35);
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--c-void); }
+::-webkit-scrollbar-thumb { background: var(--c-faint); border-radius: 999px; border: 2px solid var(--c-void); }
+::-webkit-scrollbar-thumb:hover { background: var(--c-dust); }
+
+/* The old gradient-text utility becomes plain ink */
+.text-iris {
+  font-style: italic;
 }
 
-/* Hairline inner glow on hover, no shadows */
-.hover-inner-glow {
-  transition: box-shadow 0.3s ease;
-}
-.hover-inner-glow:hover {
-  box-shadow: inset 0 0 0 1px rgba(247, 249, 250, 0.1), 0 0 0 1px rgba(247, 249, 250, 0.15);
-}
-
-/* Email body content reset */
-.email-body a { color: #af50ff; }
-.email-body img { max-width: 100%; height: auto; }
-
-@keyframes cloud-drift {
-  0%, 100% { transform: translate3d(-3%, 0, 0) scale(1.03); }
-  50% { transform: translate3d(4%, -2%, 0) scale(1.09); }
+/* Elevated card: white surface with one soft drop shadow */
+.panel-glass {
+  background: var(--panel);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-panel);
 }
 
-@keyframes cloud-drift-reverse {
-  0%, 100% { transform: translate3d(3%, 1%, 0) scale(1.06); }
-  50% { transform: translate3d(-5%, -2%, 0) scale(1.12); }
+/* Buttons stay flat — a quick darken on hover is all the motion they get */
+.btn-flat {
+  transition: background-color var(--dur-fast) var(--ease-out-soft),
+    color var(--dur-fast) var(--ease-out-soft),
+    border-color var(--dur-fast) var(--ease-out-soft);
+}
+.btn-flat:hover {
+  background: #3a3435;
 }
 
-@keyframes signal-drift {
-  0%, 100% { opacity: 0.58; transform: translate3d(-4%, 0, 0) rotate(-1deg); }
-  50% { opacity: 1; transform: translate3d(5%, -6px, 0) rotate(-1deg); }
+/* Rise-in entrance kept — but gentler, no blur theatrics */
+.rise-in {
+  animation: rise-in var(--dur-slow) var(--ease-out-soft) both;
 }
-
-@keyframes panel-breathe {
-  0%, 100% { border-color: rgba(247, 249, 250, 0.2); transform: translateY(0); }
-  50% { border-color: rgba(225, 189, 255, 0.42); transform: translateY(-3px); }
-}
-
-@keyframes signal-sweep {
-  0% { transform: translateX(-160%) skewX(-18deg); }
-  45%, 100% { transform: translateX(280%) skewX(-18deg); }
-}
-
-@keyframes soft-in {
-  from { opacity: 0; transform: translateY(16px); }
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes shimmer-text {
-  0%, 100% { opacity: 0.55; }
+/* Pulse for live states */
+.pulse-soft {
+  animation: pulse-soft 2.4s ease-in-out infinite;
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
 }
 
-.atm-shell {
-  isolation: isolate;
-}
-
-.atm-sky,
-.atm-clouds,
-.atm-flight {
-  pointer-events: none;
-  position: absolute;
-}
-
-.atm-sky {
-  inset: 0 0 auto;
-  z-index: -1;
-  height: 820px;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse 72% 42% at 51% 53%, rgba(255, 188, 197, 0.72) 0%, rgba(198, 157, 255, 0.42) 24%, transparent 61%),
-    radial-gradient(ellipse 100% 78% at 55% 3%, #123f92 0%, #09275e 43%, #111332 74%, #090909 100%);
-}
-
-.atm-sky::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(4, 13, 46, 0.05) 20%, rgba(9, 9, 9, 0.05) 48%, #090909 98%);
-}
-
-.atm-clouds {
-  inset: auto -12% -7%;
-  z-index: 0;
-  height: 56%;
-  opacity: 0.93;
-  filter: blur(1px) saturate(1.07);
-  background:
-    radial-gradient(ellipse 19% 31% at 10% 72%, rgba(44, 28, 78, 0.96) 0%, rgba(44, 28, 78, 0.68) 43%, transparent 72%),
-    radial-gradient(ellipse 24% 35% at 26% 55%, rgba(128, 91, 166, 0.93) 0%, rgba(55, 37, 91, 0.76) 44%, transparent 72%),
-    radial-gradient(ellipse 20% 30% at 43% 65%, rgba(244, 179, 186, 0.83) 0%, rgba(106, 65, 138, 0.68) 44%, transparent 72%),
-    radial-gradient(ellipse 21% 38% at 62% 45%, rgba(201, 144, 177, 0.9) 0%, rgba(55, 34, 92, 0.77) 48%, transparent 76%),
-    radial-gradient(ellipse 26% 34% at 83% 68%, rgba(240, 182, 189, 0.86) 0%, rgba(83, 48, 115, 0.75) 47%, transparent 75%),
-    radial-gradient(ellipse 20% 32% at 98% 45%, rgba(100, 65, 151, 0.86) 0%, transparent 72%);
-  animation: cloud-drift 18s ease-in-out infinite;
-}
-
-.atm-clouds::after {
-  content: '';
-  position: absolute;
-  inset: 12% -7% -18%;
-  opacity: 0.65;
-  background:
-    radial-gradient(ellipse 18% 29% at 18% 63%, #20192f 0%, transparent 72%),
-    radial-gradient(ellipse 26% 37% at 50% 82%, #261c36 0%, transparent 73%),
-    radial-gradient(ellipse 20% 33% at 85% 58%, #271c38 0%, transparent 75%);
-  animation: cloud-drift-reverse 24s ease-in-out infinite;
-}
-
-.atm-flight {
-  z-index: 1;
-  top: 43%;
-  left: 30%;
-  width: min(38vw, 520px);
-  height: 2px;
-  opacity: 0.9;
-  transform: rotate(-1deg);
-  background: linear-gradient(90deg, transparent, rgba(237, 220, 255, 0.9) 65%, #ffffff 93%, transparent);
-  filter: drop-shadow(0 0 9px rgba(255, 255, 255, 0.95));
-  animation: signal-drift 8s ease-in-out infinite;
-}
-
-.atm-flight::after {
-  content: '✦';
-  position: absolute;
-  right: 6%;
-  top: 50%;
-  color: #fff;
-  font-size: 20px;
-  transform: translateY(-52%);
-  text-shadow: 0 0 18px #fff, 0 0 32px #e1bdff;
-}
-
-.atm-scanlines {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  opacity: 0.11;
-  background-image: linear-gradient(rgba(247, 249, 250, 0.028) 1px, transparent 1px);
-  background-size: 100% 5px;
-  mix-blend-mode: soft-light;
-}
-
-.atm-hero-copy { animation: soft-in 800ms cubic-bezier(0.22, 1, 0.36, 1) both; text-shadow: 0 2px 22px rgba(5, 10, 31, 0.25); }
-.atm-panel { animation: soft-in 800ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both, panel-breathe 5s 1.1s ease-in-out infinite; backdrop-filter: blur(18px) saturate(1.25); }
-.atm-status { animation: shimmer-text 3.5s ease-in-out infinite; }
-.atm-feature { animation: soft-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
-.atm-feature:nth-child(2) { animation-delay: 90ms; }
-.atm-feature:nth-child(3) { animation-delay: 180ms; }
-
-.atm-cta {
-  position: relative;
-  overflow: hidden;
-}
-
-.atm-cta::after {
-  content: '';
-  position: absolute;
-  inset: -30% auto -30% 0;
-  width: 30%;
-  background: linear-gradient(90deg, transparent, rgba(247, 249, 250, 0.55), transparent);
-  animation: signal-sweep 5.5s ease-in-out infinite;
-}
-
-.atm-cta:hover::after { animation-duration: 1.25s; }
+/* Email body: incoming HTML forced into the paper palette */
+.email-body { color: var(--c-ink); }
+.email-body a { color: var(--c-iris-cyan); text-decoration: underline; text-underline-offset: 3px; }
+.email-body img { max-width: 100%; height: auto; border-radius: var(--r-sm); }
+.email-body table, .email-body td, .email-body tr { max-width: 100% !important; overflow-wrap: break-word; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }
