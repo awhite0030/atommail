@@ -1,0 +1,143 @@
+/*
+ * AtomMail Design System — Tokens
+ * Concept: "Prismatic Atom"
+ * One source of truth for colors, typography, spacing, radii, shadows and motion.
+ * atommail-admin consumes the same file verbatim.
+ */
+
+:root {
+  /* ---------- Primitives: color ---------- */
+  /* Base surfaces — deep violet-tinted darks, never flat black */
+  --c-void: #06040d;
+  --c-abyss: #0a0716;
+  --c-deep: #100b24;
+  --c-crust: #171030;
+  --c-surface: #1c1338;
+  --c-raised: #241a4a;
+
+  /* Text ramp */
+  --c-prism-white: #f4f1ff;
+  --c-mist: #b9b3d6;
+  --c-dust: #8b84ab;
+  --c-faint: #5d5778;
+
+  /* Iridescent spectrum stops (violet → cyan → pink) */
+  --c-iris-violet: #8b5cf6;
+  --c-iris-indigo: #6366f1;
+  --c-iris-cyan: #22d3ee;
+  --c-iris-teal: #2dd4bf;
+  --c-iris-pink: #f472b6;
+  --c-iris-amber: #fbbf24;
+
+  /* Hairlines & borders */
+  --c-hairline: rgba(244, 241, 255, 0.09);
+  --c-hairline-strong: rgba(244, 241, 255, 0.18);
+  --c-edge-glass: rgba(244, 241, 255, 0.14);
+
+  /* Functional */
+  --c-danger: #fb7185;
+  --c-danger-deep: #7f1d2e;
+  --c-success: #34d399;
+
+  /* ---------- Semantic tokens ---------- */
+  --bg: var(--c-void);
+  --bg-elevated: var(--c-deep);
+  --panel: rgba(28, 19, 56, 0.55);
+  --panel-solid: var(--c-surface);
+  --fg: var(--c-prism-white);
+  --fg-muted: var(--c-mist);
+  --fg-subtle: var(--c-dust);
+  --fg-faint: var(--c-faint);
+  --border: var(--c-hairline);
+  --border-strong: var(--c-hairline-strong);
+  --accent: var(--c-iris-violet);
+  --accent-cyan: var(--c-iris-cyan);
+  --accent-pink: var(--c-iris-pink);
+
+  /* Iridescent gradient (buttons, timer, highlights) */
+  --grad-iris: linear-gradient(
+    115deg,
+    var(--c-iris-violet) 0%,
+    var(--c-iris-indigo) 28%,
+    var(--c-iris-cyan) 55%,
+    var(--c-iris-teal) 72%,
+    var(--c-iris-pink) 100%
+  );
+  --grad-iris-soft: linear-gradient(
+    115deg,
+    rgba(139, 92, 246, 0.32) 0%,
+    rgba(34, 211, 238, 0.30) 50%,
+    rgba(244, 114, 182, 0.32) 100%
+  );
+  --grad-text: linear-gradient(
+    100deg,
+    var(--c-prism-white) 0%,
+    var(--c-mist) 60%,
+    var(--c-iris-violet) 100%
+  );
+
+  /* Glow shadows */
+  --glow-accent: 0 0 0 1px rgba(139, 92, 246, 0.14), 0 0 48px -14px rgba(139, 92, 246, 0.55);
+  --glow-cyan: 0 0 48px -14px rgba(34, 211, 238, 0.5);
+  --shadow-panel: 0 24px 80px -32px rgba(6, 4, 13, 0.9), 0 0 0 1px var(--c-edge-glass) inset;
+  --shadow-raised: 0 12px 40px -16px rgba(6, 4, 13, 0.85);
+
+  /* ---------- Typography ---------- */
+  --font-display: var(--font-space-grotesk), 'Space Grotesk', ui-sans-serif, sans-serif;
+  --font-body: var(--font-inter), 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), 'IBM Plex Mono', ui-monospace, monospace;
+
+  --text-hero: clamp(3rem, 8vw, 6.5rem);
+  --text-h1: clamp(2.25rem, 5vw, 3.75rem);
+  --text-h2: clamp(1.75rem, 3.5vw, 2.5rem);
+  --text-h3: 1.25rem;
+  --text-body: 0.9375rem;
+  --text-small: 0.8125rem;
+  --text-micro: 0.625rem;
+
+  --tracking-label: 0.22em;
+  --tracking-tight: -0.045em;
+
+  /* ---------- Spacing scale (4px base) ---------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+  --sp-10: 128px;
+
+  /* ---------- Radii ---------- */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  /* ---------- Motion ---------- */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 640ms;
+  --dur-scene: 1200ms;
+
+  /* ---------- Z-index ---------- */
+  --z-scene: 0;
+  --z-content: 10;
+  --z-nav: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0.01ms;
+    --dur-base: 0.01ms;
+    --dur-slow: 0.01ms;
+    --dur-scene: 0.01ms;
+  }
+}
