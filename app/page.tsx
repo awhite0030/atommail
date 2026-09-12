@@ -9,6 +9,9 @@ import { ExpiredState } from '@/components/ui/states'
 import { ToastViewport, toast } from '@/components/ui/toast'
 import { InboxPanel } from '@/components/inbox-panel'
 import { EmailList, EmailModal } from '@/components/email-list'
+import { HeroIntro, Reveal } from '@/components/motion/reveal'
+import { sanitizeEmailHtml } from '@/lib/sanitize'
+import { saveSession, clearSession, restoreSession } from '@/lib/session'
 import AtomSceneLazy from '@/components/three/atom-scene-lazy'
 import type { Email, EmailFull } from '@/lib/types'
 
@@ -33,20 +36,10 @@ export default function Home() {
 
   // Восстановление адреса из localStorage
   useEffect(() => {
-    const saved = localStorage.getItem('atommail_session')
+    const saved = restoreSession()
     if (saved) {
-      try {
-        const data = JSON.parse(saved)
-        if (data.expiresAt > Date.now()) {
-          setAddress(data.address)
-          setExpiresAt(data.expiresAt)
-        } else {
-          localStorage.removeItem('atommail_session')
-        }
-      } catch (err) {
-        console.error('Failed to restore session:', err)
-        localStorage.removeItem('atommail_session')
-      }
+      setAddress(saved.address)
+      setExpiresAt(saved.expiresAt)
     }
   }, [])
 
@@ -64,14 +57,6 @@ export default function Home() {
       document.body.removeChild(script)
     }
   }, [])
-
-  const saveSession = (addr: string, exp: number) => {
-    localStorage.setItem('atommail_session', JSON.stringify({ address: addr, expiresAt: exp }))
-  }
-
-  const clearSession = () => {
-    localStorage.removeItem('atommail_session')
-  }
 
   const createInbox = async () => {
     setLoading(true)
@@ -142,18 +127,6 @@ export default function Home() {
     return () => clearInterval(poll)
   }, [address, expired, fetchEmails])
 
-  const sanitize = (html: string) => {
-    const div = document.createElement('div')
-    div.innerHTML = html
-    div.querySelectorAll('script,iframe,object,embed,form').forEach((n) => n.remove())
-    div.querySelectorAll('*').forEach((el) => {
-      ;[...el.attributes].forEach((a) => {
-        if (a.name.startsWith('on')) el.removeAttribute(a.name)
-      })
-    })
-    return div.innerHTML
-  }
-
   return (
     <main className="relative min-h-screen">
       <AtomSceneLazy />
@@ -163,7 +136,7 @@ export default function Home() {
 
       <section className="mx-auto max-w-[1200px] px-6 pb-20 pt-20 sm:pb-28 sm:pt-28">
         <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="rise-in max-w-3xl">
+          <HeroIntro className="max-w-3xl">
             <Badge tone="accent" className="mb-7">
               private delivery station
             </Badge>
@@ -179,9 +152,9 @@ export default function Home() {
               <Badge>no archive</Badge>
               <Badge>expires in 10 min</Badge>
             </div>
-          </div>
+          </HeroIntro>
 
-          <div className="flex justify-center lg:justify-end">
+          <Reveal delay={0.25} className="flex justify-center lg:justify-end">
             <InboxPanel
               address={address}
               expiresAt={expiresAt}
@@ -190,7 +163,7 @@ export default function Home() {
               error={error}
               onCreate={createInbox}
             />
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -232,12 +205,12 @@ export default function Home() {
           ['01', 'No account', 'Start with an address, not a profile.'],
           ['02', 'No archive', 'Messages vanish with the inbox.'],
           ['03', 'No clutter', 'One purpose. One temporary place.'],
-        ].map(([number, title, description]) => (
-          <article key={number} className="rise-in border-t border-strong pt-6">
+        ].map(([number, title, description], i) => (
+          <Reveal key={number} delay={i * 0.12} className="border-t border-strong pt-6">
             <span className="font-mono text-micro tracking-label text-ink-dust">{number}</span>
             <h3 className="mt-6 font-display text-h3 font-light text-ink">{title}</h3>
             <p className="mt-3 max-w-xs text-body leading-6 text-ink-mist">{description}</p>
-          </article>
+          </Reveal>
         ))}
       </section>
 
@@ -245,7 +218,7 @@ export default function Home() {
 
       {selectedEmail && (
         <EmailModal
-          email={{ ...selectedEmail, body_html: sanitize(selectedEmail.body_html) }}
+          email={{ ...selectedEmail, body_html: sanitizeEmailHtml(selectedEmail.body_html) }}
           onClose={() => setSelectedEmail(null)}
         />
       )}

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Navbar, Footer } from '@/components/ui/chrome'
 import { Badge } from '@/components/ui/badge'
 import { Panel, Label } from '@/components/ui/panel'
+import { Reveal } from '@/components/motion/reveal'
 
 export const metadata: Metadata = {
   title: 'Privacy — AtomMail',
@@ -58,17 +59,19 @@ export default function PrivacyPage() {
         </p>
 
         <div className="mt-16 grid gap-8">
-          {sections.map((s) => (
-            <Panel key={s.title} glass className="p-8 sm:p-10">
-              <Label className="text-ink">{s.title}</Label>
-              <div className="mt-5 grid gap-4">
-                {s.body.map((p, i) => (
-                  <p key={i} className="max-w-2xl text-body leading-7 text-ink-mist">
-                    {p}
-                  </p>
-                ))}
-              </div>
-            </Panel>
+          {sections.map((s, i) => (
+            <Reveal key={s.title} delay={Math.min(i * 0.08, 0.3)}>
+              <Panel glass className="p-8 sm:p-10">
+                <Label className="text-ink">{s.title}</Label>
+                <div className="mt-5 grid gap-4">
+                  {s.body.map((p, j) => (
+                    <p key={j} className="max-w-2xl text-body leading-7 text-ink-mist">
+                      {p}
+                    </p>
+                  ))}
+                </div>
+              </Panel>
+            </Reveal>
           ))}
         </div>
       </section>

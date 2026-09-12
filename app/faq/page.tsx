@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { Navbar, Footer } from '@/components/ui/chrome'
+import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/panel'
 import { Badge } from '@/components/ui/badge'
+import { Reveal } from '@/components/motion/reveal'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'FAQ — AtomMail',
@@ -60,18 +61,19 @@ export default function FaqPage() {
 
         <div className="mt-16 grid gap-0">
           {faqs.map((f, i) => (
-            <details
-              key={i}
-              className="group border-t border-strong py-6 last:border-b open:bg-ink/[0.02]"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-body font-medium text-ink transition-fast [&::-webkit-details-marker]:hidden">
-                {f.q}
-                <span className="font-mono text-micro uppercase tracking-label text-ink-mist transition-fast group-open:rotate-45">
-                  +
-                </span>
+            <Reveal key={i} delay={Math.min(i * 0.05, 0.3)} y={16}>
+              <details
+                className="group border-t border-strong py-6 last:border-b open:bg-ink/[0.02]"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-body font-medium text-ink transition-fast [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <span className="font-mono text-micro uppercase tracking-label text-ink-mist transition-fast group-open:rotate-45">
+                    +
+                  </span>
               </summary>
               <p className="mt-4 max-w-2xl text-body leading-7 text-ink-mist">{f.a}</p>
-            </details>
+              </details>
+            </Reveal>
           ))}
         </div>
 
