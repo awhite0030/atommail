@@ -68,6 +68,27 @@ html {
 .email-body img { max-width: 100%; height: auto; border-radius: var(--r-sm); }
 .email-body table, .email-body td, .email-body tr { max-width: 100% !important; overflow-wrap: break-word; }
 
+/* The 3D atom is decorative. Keep its full-screen canvas below the app and
+   make it transparent to every mouse/touch interaction. */
+.scene-holder {
+  pointer-events: none;
+  z-index: 0;
+}
+.scene-holder canvas {
+  display: block;
+  pointer-events: none;
+  touch-action: pan-y;
+}
+
+/* Interactive page content always paints above the decorative canvas. */
+main > nav,
+main > section,
+main > footer,
+main > div.toast-viewport {
+  position: relative;
+  z-index: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

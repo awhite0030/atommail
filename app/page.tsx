@@ -131,8 +131,9 @@ export default function Home() {
     <main className="relative min-h-screen">
       <AtomSceneLazy />
 
-      <Navbar />
-      <ToastViewport />
+      <div className="relative z-content">
+        <Navbar />
+        <ToastViewport />
 
       <section className="mx-auto max-w-[1200px] px-6 pb-20 pt-20 sm:pb-28 sm:pt-28">
         <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
@@ -222,6 +223,7 @@ export default function Home() {
           onClose={() => setSelectedEmail(null)}
         />
       )}
+      </div>
     </main>
   )
 }
