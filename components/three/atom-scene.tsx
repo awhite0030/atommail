@@ -15,8 +15,9 @@ import * as THREE from 'three'
 /**
  * "Glass atom" — premium edition. A crystal core orbited by three smoke-grey
  * electrons that leave light trails, drifting through a fine dust of
- * particles. The whole object follows the cursor with soft parallax and
- * breathes on the page like a product film still.
+ * particles. The atom group is offset in 3D space (right of the hero copy),
+ * so the canvas holder always covers the full viewport and nothing renders
+ * off-screen. The whole object follows the cursor with soft parallax.
  */
 
 /** Smoothed pointer → parallax for the whole atom group. */
@@ -186,15 +187,20 @@ function AtomScene({ onFail }: { onFail: () => void }) {
       />
 
       <PointerParallax>
-        <Entrance>
-          <Core />
-          <Electron radius={2.0} tilt={[1.15, 0.2, 0]} speed={0.6} phase={0} trailColor="#b9b7b2" />
-          <Electron radius={2.55} tilt={[1.9, -0.4, 0.3]} speed={0.44} phase={2.1} trailColor="#a8a49e" />
-          <Electron radius={3.1} tilt={[0.8, 0.5, -0.5]} speed={0.34} phase={4.2} trailColor="#c4c2bd" />
-        </Entrance>
+        {/* Offset the atom right in 3D space: the hero copy owns the left
+            half, the atom floats in the right air. The canvas itself still
+            covers the viewport — nothing renders off-screen. */}
+        <group position={[2.4, 0.4, 0]}>
+          <Entrance>
+            <Core />
+            <Electron radius={2.0} tilt={[1.15, 0.2, 0]} speed={0.6} phase={0} trailColor="#b9b7b2" />
+            <Electron radius={2.55} tilt={[1.9, -0.4, 0.3]} speed={0.44} phase={2.1} trailColor="#a8a49e" />
+            <Electron radius={3.1} tilt={[0.8, 0.5, -0.5]} speed={0.34} phase={4.2} trailColor="#c4c2bd" />
+          </Entrance>
+        </group>
       </PointerParallax>
 
-      <ContactShadows position={[0, -3.4, 0]} opacity={0.18} scale={14} blur={2.6} far={5} color="#231f20" />
+      <ContactShadows position={[2.4, -3.4, 0]} opacity={0.18} scale={14} blur={2.6} far={5} color="#231f20" />
 
       <CameraDrift />
       <Environment preset="city" />
@@ -204,7 +210,8 @@ function AtomScene({ onFail }: { onFail: () => void }) {
 }
 
 export default function AtomScene3D() {
-  // Emergency off-switch: the FPS guard flips this and unmounts the canvas
+  // Emergency off-switch: the FPS guard or a lost WebGL context
+  // flips this and unmounts the canvas entirely.
   const [failed, setFailed] = useState(false)
 
   if (failed) return null
@@ -212,20 +219,22 @@ export default function AtomScene3D() {
   return (
     <div
       aria-hidden
-      /* The atom sits in the air between the hero copy and the inbox panel:
-         offset right and up on wide screens, tucked behind on narrow ones. */
-      className="scene-holder pointer-events-none fixed z-scene opacity-80
-                 right-0 top-0 h-screen w-[62vw] translate-x-[18%] lg:w-[46vw] lg:translate-x-[6%]"
+      className="scene-holder pointer-events-none fixed inset-0 z-scene opacity-80"
     >
       <Canvas
         camera={{ position: [0, 0.4, 9.2], fov: 40 }}
-        dpr={[1, 1.5]}
+        dpr={[1, 1.25]}
         frameloop="always"
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance', preserveDrawingBuffer: false }}
         onCreated={({ gl }) => {
-          // Fade the canvas in only after the first real frame —
-          // prevents the black-flash of an uninitialized drawing buffer
+          // Transparent clear color — no black flash from an empty buffer
           gl.setClearColor(0x000000, 0)
+          // A lost GPU context would white-screen the page; drop the scene
+          // gracefully instead of letting the renderer die.
+          gl.domElement.addEventListener('webglcontextlost', (e) => {
+            e.preventDefault()
+            setFailed(true)
+          })
         }}
       >
         <Suspense fallback={null}>
