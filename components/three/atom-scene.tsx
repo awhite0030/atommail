@@ -80,7 +80,10 @@ function Core() {
   return (
     <Float speed={1.1} rotationIntensity={0.25} floatIntensity={0.7}>
       <mesh ref={ref}>
-        <icosahedronGeometry args={[1, 12]} />
+        {/* Detail 12 produces ~335 million triangles and can monopolise the
+            main thread while the hero is mounting. Detail 5 is visually
+            smooth at this scale (~20k triangles) and keeps the CTA responsive. */}
+        <icosahedronGeometry args={[1, 5]} />
         <MeshTransmissionMaterial
           thickness={0.9}
           roughness={0.08}
@@ -91,8 +94,8 @@ function Core() {
           distortion={0.24}
           distortionScale={0.4}
           temporalDistortion={0.06}
-          samples={4}
-          resolution={256}
+          samples={2}
+          resolution={128}
         />
       </mesh>
     </Float>
@@ -158,7 +161,7 @@ function FpsGuard({ onFail }: { onFail: () => void }) {
     if (t0.current === null) t0.current = now
     frames.current++
     const elapsed = now - t0.current
-    if (elapsed >= 4000) {
+    if (elapsed >= 1500) {
       const fps = (frames.current * 1000) / elapsed
       if (fps < 30) onFail()
       t0.current = now
