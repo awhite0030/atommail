@@ -62,11 +62,11 @@ export default function Home() {
     setLoading(true)
     setError('')
     try {
-      const turnstileToken = window.turnstile?.getResponse() ?? ''
+      const captchaToken = window.turnstile?.getResponse() ?? ''
       const res = await fetch('/api/inbox', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ turnstileToken }),
+        body: JSON.stringify({ captchaToken }),
       })
       const data = await res.json()
       if (!res.ok) {
