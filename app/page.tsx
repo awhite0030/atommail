@@ -110,8 +110,10 @@ export default function Home() {
       setEmails([])
       saveSession(data.address, data.expiresAt)
       toast('Inbox ready', 'success')
-      // Reset the widget so a fresh token is required for the next address
-      window.turnstile?.reset()
+      // Do not reset Turnstile here. Setting the address unmounts its iframe;
+      // resetting that same iframe during the React commit can crash Safari
+      // and embedded Chromium renderers. A fresh widget is mounted when the
+      // create form is shown again.
     } catch (err) {
       console.error('Failed to create inbox:', err)
       setError((err as Error).name === 'AbortError'
