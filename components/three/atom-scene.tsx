@@ -1,11 +1,10 @@
 'use client'
 
-import { Suspense, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import {
   Environment,
   Float,
-  MeshTransmissionMaterial,
   ContactShadows,
   Sparkles,
   Trail,
@@ -84,18 +83,15 @@ function Core() {
             main thread while the hero is mounting. Detail 5 is visually
             smooth at this scale (~20k triangles) and keeps the CTA responsive. */}
         <icosahedronGeometry args={[1, 5]} />
-        <MeshTransmissionMaterial
-          thickness={0.9}
-          roughness={0.08}
-          transmission={1}
-          ior={1.45}
-          chromaticAberration={0.1}
-          anisotropicBlur={0.3}
-          distortion={0.24}
-          distortionScale={0.4}
-          temporalDistortion={0.06}
-          samples={2}
-          resolution={128}
+        {/* Transmission renders multiple off-screen passes each frame. This
+            opaque studio material preserves the dark glossy atom while
+            keeping the main thread free for the inbox controls. */}
+        <meshPhysicalMaterial
+          color="#2b292a"
+          roughness={0.16}
+          metalness={0.28}
+          clearcoat={0.82}
+          clearcoatRoughness={0.14}
         />
       </mesh>
     </Float>
@@ -209,12 +205,6 @@ function AtomScene({ onFail }: { onFail: () => void }) {
       <ContactShadows position={[0, -3.4, 0]} opacity={0.18} scale={14} blur={2.6} far={5} color="#231f20" frames={1} />
 
       <CameraDrift />
-      {/* Loading the remote HDR must not suspend the core sphere, rings, and
-          lights. The atom now appears immediately and gains reflections when
-          the environment texture is ready. */}
-      <Suspense fallback={null}>
-        <Environment preset="city" />
-      </Suspense>
       <FpsGuard onFail={onFail} />
     </>
   )
@@ -234,7 +224,7 @@ export default function AtomScene3D() {
     >
       <Canvas
         camera={{ position: [0, 0.4, 9.2], fov: 40 }}
-        dpr={[1, 1.25]}
+        dpr={[1, 1]}
         frameloop="always"
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance', preserveDrawingBuffer: false }}
         onCreated={({ gl }) => {
