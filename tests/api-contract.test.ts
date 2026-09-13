@@ -22,4 +22,9 @@ describe('inbox API contract', () => {
   it('API still reads captchaToken (source of truth)', () => {
     expect(route).toContain('const { captchaToken, website_url } = body')
   })
+
+  it('creates the inbox through the single atomic database RPC', () => {
+    expect(route).toContain("rpc('create_temporary_inbox'")
+    expect(route).not.toContain("from('inboxes').insert")
+  })
 })

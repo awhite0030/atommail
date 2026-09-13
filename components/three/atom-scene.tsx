@@ -1,10 +1,11 @@
 'use client'
 
-import { useMemo, useRef, useState } from 'react'
+import { Suspense, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import {
   Environment,
   Float,
+  MeshTransmissionMaterial,
   ContactShadows,
   Sparkles,
   Trail,
@@ -79,19 +80,21 @@ function Core() {
   return (
     <Float speed={1.1} rotationIntensity={0.25} floatIntensity={0.7}>
       <mesh ref={ref}>
-        {/* Detail 12 produces ~335 million triangles and can monopolise the
-            main thread while the hero is mounting. Detail 5 is visually
-            smooth at this scale (~20k triangles) and keeps the CTA responsive. */}
-        <icosahedronGeometry args={[1, 5]} />
-        {/* Transmission renders multiple off-screen passes each frame. This
-            opaque studio material preserves the dark glossy atom while
-            keeping the main thread free for the inbox controls. */}
-        <meshPhysicalMaterial
-          color="#2b292a"
-          roughness={0.16}
-          metalness={0.28}
-          clearcoat={0.82}
-          clearcoatRoughness={0.14}
+        {/* Detail 12 produces ~335 million triangles. Detail 6 keeps the
+            original smooth, glass-like silhouette at roughly 82k triangles. */}
+        <icosahedronGeometry args={[1, 6]} />
+        <MeshTransmissionMaterial
+          thickness={0.9}
+          roughness={0.08}
+          transmission={1}
+          ior={1.45}
+          chromaticAberration={0.1}
+          anisotropicBlur={0.3}
+          distortion={0.24}
+          distortionScale={0.4}
+          temporalDistortion={0.06}
+          samples={4}
+          resolution={256}
         />
       </mesh>
     </Float>
@@ -205,6 +208,9 @@ function AtomScene({ onFail }: { onFail: () => void }) {
       <ContactShadows position={[0, -3.4, 0]} opacity={0.18} scale={14} blur={2.6} far={5} color="#231f20" frames={1} />
 
       <CameraDrift />
+      <Suspense fallback={null}>
+        <Environment preset="city" />
+      </Suspense>
       <FpsGuard onFail={onFail} />
     </>
   )
@@ -224,7 +230,7 @@ export default function AtomScene3D() {
     >
       <Canvas
         camera={{ position: [0, 0.4, 9.2], fov: 40 }}
-        dpr={[1, 1]}
+        dpr={[1, 1.25]}
         frameloop="always"
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance', preserveDrawingBuffer: false }}
         onCreated={({ gl }) => {

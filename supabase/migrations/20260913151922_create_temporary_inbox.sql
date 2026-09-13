@@ -1,85 +1,18 @@
--- AtomMail Supabase Schema
-
--- Temporary inboxes table
-CREATE TABLE IF NOT EXISTS inboxes (
-  address TEXT PRIMARY KEY,
-  created_at BIGINT NOT NULL,
-  expires_at BIGINT NOT NULL,
-  creator_ip_hash TEXT
-);
-
--- Emails table
-CREATE TABLE IF NOT EXISTS emails (
-  id BIGSERIAL PRIMARY KEY,
-  recipient TEXT NOT NULL,
-  sender TEXT NOT NULL,
-  subject TEXT,
-  body_text TEXT,
-  body_html TEXT,
-  received_at BIGINT NOT NULL,
-  CONSTRAINT fk_recipient FOREIGN KEY (recipient) REFERENCES inboxes(address) ON DELETE CASCADE
-);
-
--- Index for faster email lookups by recipient
-CREATE INDEX IF NOT EXISTS idx_emails_recipient ON emails(recipient);
-
--- Index for expiration cleanup
-CREATE INDEX IF NOT EXISTS idx_inboxes_expires_at ON inboxes(expires_at);
-
--- Index for per-IP rate limit checks
-CREATE INDEX IF NOT EXISTS idx_inboxes_creator_ip ON inboxes(creator_ip_hash, created_at);
-
--- One-minute creation counters. This is intentionally server-only.
-CREATE TABLE IF NOT EXISTS inbox_rate_limits (
+-- Make address creation a single database round-trip. This avoids serial
+-- PostgREST calls after a completed Turnstile challenge and keeps limits
+-- consistent under concurrent requests.
+CREATE TABLE IF NOT EXISTS public.inbox_rate_limits (
   ip_hash TEXT PRIMARY KEY,
   window_started_at BIGINT NOT NULL,
   request_count INTEGER NOT NULL
 );
-CREATE INDEX IF NOT EXISTS idx_inbox_rate_limits_window ON inbox_rate_limits(window_started_at);
 
--- Row Level Security (allow public read for temporary email service)
-ALTER TABLE inboxes ENABLE ROW LEVEL SECURITY;
-ALTER TABLE emails ENABLE ROW LEVEL SECURITY;
-ALTER TABLE inbox_rate_limits ENABLE ROW LEVEL SECURITY;
+CREATE INDEX IF NOT EXISTS idx_inbox_rate_limits_window
+  ON public.inbox_rate_limits(window_started_at);
 
--- Allow public access to inboxes (needed for email verification use cases)
-CREATE POLICY "Allow public read inboxes" ON inboxes
-  FOR SELECT USING (true);
+ALTER TABLE public.inbox_rate_limits ENABLE ROW LEVEL SECURITY;
 
--- Allow public access to emails
-CREATE POLICY "Allow public read emails" ON emails
-  FOR SELECT USING (true);
-
--- Allow inserts from service role (Cloudflare Worker)
-CREATE POLICY "Allow service role insert emails" ON emails
-  FOR INSERT WITH CHECK (true);
-
-CREATE POLICY "Allow service role insert inboxes" ON inboxes
-  FOR INSERT WITH CHECK (true);
-
--- Allow deletes from service role
-CREATE POLICY "Allow service role delete emails" ON emails
-  FOR DELETE USING (true);
-
-CREATE POLICY "Allow service role delete inboxes" ON inboxes
-  FOR DELETE USING (true);
-
--- Function to auto-cleanup expired inboxes (run periodically)
--- Run this manually: SELECT cleanup_expired_inboxes();
-CREATE OR REPLACE FUNCTION cleanup_expired_inboxes()
-RETURNS INTEGER AS $$
-DECLARE
-  deleted_count INTEGER;
-BEGIN
-  DELETE FROM inboxes WHERE expires_at < EXTRACT(EPOCH FROM NOW()) * 1000;
-  GET DIAGNOSTICS deleted_count = ROW_COUNT;
-  RETURN deleted_count;
-END;
-$$ LANGUAGE plpgsql;
-
--- Atomic creation is a single Supabase RPC after Turnstile completes. It
--- keeps limits accurate under concurrency and avoids a chain of HTTP calls.
-CREATE OR REPLACE FUNCTION create_temporary_inbox(
+CREATE OR REPLACE FUNCTION public.create_temporary_inbox(
   p_ip_hash TEXT,
   p_now BIGINT,
   p_domain TEXT DEFAULT 'atommail.cyou'
@@ -110,6 +43,8 @@ DECLARE
   v_address TEXT;
   v_attempt INTEGER;
 BEGIN
+  -- Serialise the small capacity check and insert so the configured global
+  -- limit cannot be exceeded by concurrent requests.
   PERFORM pg_advisory_xact_lock(476354932);
 
   SELECT
@@ -182,6 +117,7 @@ BEGIN
       RETURN QUERY SELECT 201, NULL::TEXT, v_address, p_now + v_ttl_ms, v_rate_limit, v_rate_remaining;
       RETURN;
     EXCEPTION WHEN unique_violation THEN
+      -- Generate another local part; a collision is extremely unlikely.
     END;
   END LOOP;
 
@@ -189,5 +125,5 @@ BEGIN
 END;
 $$;
 
-REVOKE ALL ON FUNCTION create_temporary_inbox(TEXT, BIGINT, TEXT) FROM PUBLIC;
-GRANT EXECUTE ON FUNCTION create_temporary_inbox(TEXT, BIGINT, TEXT) TO service_role;
+REVOKE ALL ON FUNCTION public.create_temporary_inbox(TEXT, BIGINT, TEXT) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.create_temporary_inbox(TEXT, BIGINT, TEXT) TO service_role;
