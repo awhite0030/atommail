@@ -21,7 +21,7 @@ export default function NotFound() {
             <Link href="/">
               <Button size="lg">Back to the inbox</Button>
             </Link>
-            <Label className="text-ink-mist">everything here is temporary anyway</Label>
+            <Label className="text-ink-faint">everything here is temporary anyway</Label>
           </div>
         </div>
       </section>

@@ -9,9 +9,9 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const sizes: Record<Size, string> = {
-  sm: 'px-6 py-2.5 text-micro min-h-11 sm:px-8',
-  md: 'px-8 py-3 text-small min-h-11 sm:px-12',
-  lg: 'px-10 py-4 text-small min-h-12 sm:px-14',
+  sm: 'px-8 py-2.5 text-micro',
+  md: 'px-12 py-3 text-small',
+  lg: 'px-14 py-4 text-small',
 }
 
 const variants: Record<Variant, string> = {

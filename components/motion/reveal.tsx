@@ -7,7 +7,7 @@ const easeOutSoft = [0.22, 1, 0.36, 1] as const
 
 /**
  * Scroll-triggered reveal: content rises in with a soft blur→sharp focus,
- * the signature of high-end product sites.
+ * the signature of high-end product sites. Staggers children when asked.
  */
 export function Reveal({
   children,
@@ -27,8 +27,8 @@ export function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y, filter: 'blur(6px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.9, delay, ease: easeOutSoft }}
     >
@@ -37,18 +37,13 @@ export function Reveal({
   )
 }
 
-/**
- * Hero entrance: choreographed on load — badge, headline, lead and chips
- * settle in one after another, echoing the original site's staggered soft-in.
- */
+/** Hero entrance: choreographed, not scroll-linked. */
 export function HeroIntro({
   children,
   className,
-  delay = 0.2,
 }: {
   children: ReactNode
   className?: string
-  delay?: number
 }) {
   const reduced = useReducedMotion()
 
@@ -57,47 +52,9 @@ export function HeroIntro({
   return (
     <motion.div
       className={className}
-      initial="hidden"
-      animate="show"
-      variants={{
-        hidden: {},
-        show: { transition: { staggerChildren: 0.14, delayChildren: delay } },
-      }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
-/** One step of the hero cascade — used inside HeroIntro. */
-export function HeroStep({
-  children,
-  className,
-  /** LCP step renders visible immediately; only non-critical steps hide. */
-  visible = false,
-}: {
-  children: ReactNode
-  className?: string
-  visible?: boolean
-}) {
-  const reduced = useReducedMotion()
-
-  if (reduced) return <div className={className}>{children}</div>
-
-  // No blur filter here: animated blur on large regions causes dark
-  // compositing artifacts on integrated GPUs.
-  return (
-    <motion.div
-      className={className}
-      initial={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
-      variants={{
-        hidden: visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 },
-        show: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.85, ease: easeOutSoft },
-        },
-      }}
+      initial={{ opacity: 0, y: 34, filter: 'blur(8px)' }}
+      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      transition={{ duration: 1.1, ease: easeOutSoft, delay: 0.15 }}
     >
       {children}
     </motion.div>

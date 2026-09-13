@@ -18,8 +18,6 @@ export function InboxPanel({
   loading,
   error,
   onCreate,
-  turnstileSiteKey,
-  captchaConfigurationMissing = false,
 }: {
   address: string
   expiresAt: number
@@ -27,8 +25,6 @@ export function InboxPanel({
   loading: boolean
   error: string
   onCreate: () => void
-  turnstileSiteKey?: string
-  captchaConfigurationMissing?: boolean
 }) {
   const [copied, setCopied] = useState(false)
 
@@ -55,10 +51,9 @@ export function InboxPanel({
           No signup. Your address disappears automatically after ten minutes.
         </p>
         {error && <div className="mt-6"><ErrorState message={error} /></div>}
-        {captchaConfigurationMissing && <div className="mt-6"><ErrorState message="Security verification is temporarily unavailable." /></div>}
         <Button
           onClick={onCreate}
-          disabled={loading || captchaConfigurationMissing}
+          disabled={loading}
           size="lg"
           className="mt-8 w-full"
         >
@@ -72,17 +67,17 @@ export function InboxPanel({
           style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
           aria-hidden="true"
         />
-        {turnstileSiteKey && (
+        {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
           <div className="mt-5 flex justify-center">
             <div
               className="cf-turnstile"
-              data-sitekey={turnstileSiteKey}
+              data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
               data-theme="dark"
             />
           </div>
         )}
         <p className="mt-6 text-center">
-          <Label className="text-ink-mist">cloudflare protected · no tracking</Label>
+          <Label className="text-ink-faint">cloudflare protected · no tracking</Label>
         </p>
       </Panel>
     )

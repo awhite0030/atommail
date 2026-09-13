@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, IBM_Plex_Mono, Fraunces } from 'next/font/google'
 import SmoothScroll from '@/components/smooth-scroll'
-import { SiteIntro } from '@/components/motion/site-intro'
 import './styles/tokens.css'
 import './globals.css'
 
@@ -22,7 +21,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${plexMono.variable} ${fraunces.variable} min-h-screen bg-void font-sans text-ink antialiased`}>
-        <SiteIntro />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

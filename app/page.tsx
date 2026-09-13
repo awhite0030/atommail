@@ -9,8 +9,7 @@ import { ExpiredState } from '@/components/ui/states'
 import { ToastViewport, toast } from '@/components/ui/toast'
 import { InboxPanel } from '@/components/inbox-panel'
 import { EmailList, EmailModal } from '@/components/email-list'
-import { HeroIntro, HeroStep, Reveal } from '@/components/motion/reveal'
-import { useSiteIntroPlaying } from '@/components/motion/site-intro'
+import { HeroIntro, Reveal } from '@/components/motion/reveal'
 import { sanitizeEmailHtml } from '@/lib/sanitize'
 import { saveSession, clearSession, restoreSession } from '@/lib/session'
 import AtomSceneLazy from '@/components/three/atom-scene-lazy'
@@ -27,8 +26,6 @@ declare global {
 }
 
 export default function Home() {
-  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
-  const captchaConfigurationMissing = process.env.NODE_ENV === 'production' && !turnstileSiteKey
   const [address, setAddress] = useState('')
   const [expiresAt, setExpiresAt] = useState(0)
   const [emails, setEmails] = useState<Email[]>([])
@@ -36,7 +33,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [expired, setExpired] = useState(false)
   const [error, setError] = useState('')
-  const introPlaying = useSiteIntroPlaying()
 
   // Восстановление адреса из localStorage
   useEffect(() => {
@@ -51,8 +47,6 @@ export default function Home() {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    if (!turnstileSiteKey) return
-
     const script = document.createElement('script')
     script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
     script.async = true
@@ -62,46 +56,21 @@ export default function Home() {
     return () => {
       document.body.removeChild(script)
     }
-  }, [turnstileSiteKey])
+  }, [])
 
   const createInbox = async () => {
-    if (captchaConfigurationMissing) {
-      setError('Security verification is temporarily unavailable. Please try again later.')
-      return
-    }
-
-    const captchaToken = (!address && turnstileSiteKey && window.turnstile)
-      ? window.turnstile.getResponse() || ''
-      : ''
-    if (!address && turnstileSiteKey && !captchaToken) {
-      setError('Please complete the security verification before creating an address.')
-      return
-    }
-
     setLoading(true)
     setError('')
-    const controller = new AbortController()
-    const timeout = window.setTimeout(() => controller.abort(), 12_000)
     try {
+      const turnstileToken = window.turnstile?.getResponse() ?? ''
       const res = await fetch('/api/inbox', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        signal: controller.signal,
-        body: JSON.stringify({ captchaToken }),
+        body: JSON.stringify({ turnstileToken }),
       })
-      let data: { address?: string; expiresAt?: number; error?: string }
-      try {
-        data = await res.json()
-      } catch {
-        setError(`Server error (${res.status}). Please try again.`)
-        return
-      }
+      const data = await res.json()
       if (!res.ok) {
         setError(data.error || 'Failed to create inbox')
-        return
-      }
-      if (!data.address || !data.expiresAt) {
-        setError('Invalid server response. Please try again.')
         return
       }
       setAddress(data.address)
@@ -110,17 +79,10 @@ export default function Home() {
       setEmails([])
       saveSession(data.address, data.expiresAt)
       toast('Inbox ready', 'success')
-      // Do not reset Turnstile here. Setting the address unmounts its iframe;
-      // resetting that same iframe during the React commit can crash Safari
-      // and embedded Chromium renderers. A fresh widget is mounted when the
-      // create form is shown again.
     } catch (err) {
       console.error('Failed to create inbox:', err)
-      setError((err as Error).name === 'AbortError'
-        ? 'Creating an address took too long. Please try again.'
-        : 'Network error. Please try again.')
+      setError('Network error. Please try again.')
     } finally {
-      window.clearTimeout(timeout)
       setLoading(false)
     }
   }
@@ -169,39 +131,30 @@ export default function Home() {
     <main className="relative min-h-screen">
       <AtomSceneLazy />
 
-      <div className="relative z-content">
-        <Navbar />
-        <ToastViewport />
+      <Navbar />
+      <ToastViewport />
 
       <section className="mx-auto max-w-[1200px] px-6 pb-20 pt-20 sm:pb-28 sm:pt-28">
         <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-          <HeroIntro className="min-w-0 max-w-3xl" delay={introPlaying ? 0.9 : 0.2}>
-            <HeroStep>
-              <Badge tone="accent" className="mb-7">
-                private delivery station
-              </Badge>
-            </HeroStep>
-            <HeroStep visible>
-              <h1 className="font-display text-hero font-light text-ink">
-                Email for the <span className="italic">moment</span>
-              </h1>
-            </HeroStep>
-            <HeroStep>
-              <p className="mt-8 max-w-xl text-body leading-7 text-ink-mist sm:text-lg">
-                Make a private address in seconds. Receive what you need, then leave
-                nothing behind.
-              </p>
-            </HeroStep>
-            <HeroStep>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <Badge>no signup</Badge>
-                <Badge>no archive</Badge>
-                <Badge>expires in 10 min</Badge>
-              </div>
-            </HeroStep>
+          <HeroIntro className="max-w-3xl">
+            <Badge tone="accent" className="mb-7">
+              private delivery station
+            </Badge>
+            <h1 className="font-display text-hero font-light text-ink">
+              Email for the <span className="italic">moment</span>
+            </h1>
+            <p className="mt-8 max-w-xl text-body leading-7 text-ink-mist sm:text-lg">
+              Make a private address in seconds. Receive what you need, then leave
+              nothing behind.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Badge>no signup</Badge>
+              <Badge>no archive</Badge>
+              <Badge>expires in 10 min</Badge>
+            </div>
           </HeroIntro>
 
-          <Reveal delay={introPlaying ? 1.4 : 0.5} y={34} className="flex min-w-0 justify-center lg:justify-end">
+          <Reveal delay={0.25} className="flex justify-center lg:justify-end">
             <InboxPanel
               address={address}
               expiresAt={expiresAt}
@@ -209,8 +162,6 @@ export default function Home() {
               loading={loading}
               error={error}
               onCreate={createInbox}
-              turnstileSiteKey={turnstileSiteKey}
-              captchaConfigurationMissing={captchaConfigurationMissing}
             />
           </Reveal>
         </div>
@@ -271,7 +222,6 @@ export default function Home() {
           onClose={() => setSelectedEmail(null)}
         />
       )}
-      </div>
     </main>
   )
 }

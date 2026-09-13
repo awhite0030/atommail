@@ -17,7 +17,7 @@ export function EmptyState({ hint = 'Waiting for mail…' }: { hint?: ReactNode 
         <span className="h-1.5 w-1.5 rounded-pill bg-ink-mist" />
       </span>
       <p className="max-w-sm text-body text-ink-mist">{hint}</p>
-      <span className="font-mono text-micro uppercase tracking-label text-ink-mist">
+      <span className="font-mono text-micro uppercase tracking-label text-ink-faint">
         auto-refresh · every 3s
       </span>
     </li>
