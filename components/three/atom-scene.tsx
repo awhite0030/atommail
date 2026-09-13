@@ -187,10 +187,10 @@ function AtomScene({ onFail }: { onFail: () => void }) {
       />
 
       <PointerParallax>
-        {/* Offset the atom right in 3D space: the hero copy owns the left
-            half, the atom floats in the right air. The canvas itself still
-            covers the viewport — nothing renders off-screen. */}
-        <group position={[2.4, 0.4, 0]}>
+        {/* y=0.8 lifts the atom's center into the upper-middle of the
+            viewport (camera looks from y=0.4) — the original working
+            composition, centered over the hero. */}
+        <group position={[0, 0.8, 0]}>
           <Entrance>
             <Core />
             <Electron radius={2.0} tilt={[1.15, 0.2, 0]} speed={0.6} phase={0} trailColor="#b9b7b2" />
@@ -200,7 +200,10 @@ function AtomScene({ onFail }: { onFail: () => void }) {
         </group>
       </PointerParallax>
 
-      <ContactShadows position={[2.4, -3.4, 0]} opacity={0.18} scale={14} blur={2.6} far={5} color="#231f20" />
+      {/* Baked once: a per-frame shadow re-render made the lower part of
+          the page shimmer/jitter. Visually identical for this decorative
+          layer. */}
+      <ContactShadows position={[0, -3.4, 0]} opacity={0.18} scale={14} blur={2.6} far={5} color="#231f20" frames={1} />
 
       <CameraDrift />
       <Environment preset="city" />
