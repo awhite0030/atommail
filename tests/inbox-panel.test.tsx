@@ -37,6 +37,12 @@ describe('InboxPanel', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('Rate limited')
   })
 
+  it('disables creation when the production CAPTCHA configuration is missing', () => {
+    render(<InboxPanel {...base} captchaConfigurationMissing />)
+    expect(screen.getByRole('alert')).toHaveTextContent('Security verification is temporarily unavailable.')
+    expect(screen.getByRole('button', { name: /create address/i })).toBeDisabled()
+  })
+
   it('shows the expired CTA variant after expiry', () => {
     render(<InboxPanel {...base} expired />)
     expect(

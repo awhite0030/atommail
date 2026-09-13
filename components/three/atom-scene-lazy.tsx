@@ -3,7 +3,8 @@
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
-const AtomScene3D = dynamic(() => import('./atom-scene'), { ssr: false })
+const loadAtomScene = () => import('./atom-scene')
+const AtomScene3D = dynamic(loadAtomScene, { ssr: false })
 
 function prefersReducedMotion() {
   if (typeof window === 'undefined' || !window.matchMedia) return false
@@ -34,19 +35,23 @@ export default function AtomSceneLazy() {
   useEffect(() => {
     if (prefersReducedMotion() || isLowPowerDevice() || isPhoneViewport()) return
 
-    // requestIdleCallback defers the scene past LCP, but it never fires
-    // for background tabs (and some WebViews stall it entirely) —
-    // a hard timeout guarantees the scene still arrives.
+    // Begin loading the split Three.js chunk immediately after hydration. The
+    // old implementation deferred both mounting *and downloading* until idle,
+    // making the atom appear several seconds after the rest of the hero.
+    void loadAtomScene()
+
+    // Keep the scene out of the critical render path, but bound the wait. A
+    // browser that is never idle must not leave the hero half-composed.
     let done = false
     const fire = () => {
       if (done) return
       done = true
       setShow(true)
     }
-    const fallback = setTimeout(fire, 900)
+    const fallback = setTimeout(fire, 250)
     let ricId: number | undefined
     if ('requestIdleCallback' in window) {
-      ricId = requestIdleCallback(fire)
+      ricId = requestIdleCallback(fire, { timeout: 250 })
     }
     return () => {
       done = true

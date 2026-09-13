@@ -206,7 +206,12 @@ function AtomScene({ onFail }: { onFail: () => void }) {
       <ContactShadows position={[0, -3.4, 0]} opacity={0.18} scale={14} blur={2.6} far={5} color="#231f20" frames={1} />
 
       <CameraDrift />
-      <Environment preset="city" />
+      {/* Loading the remote HDR must not suspend the core sphere, rings, and
+          lights. The atom now appears immediately and gains reflections when
+          the environment texture is ready. */}
+      <Suspense fallback={null}>
+        <Environment preset="city" />
+      </Suspense>
       <FpsGuard onFail={onFail} />
     </>
   )
@@ -240,9 +245,7 @@ export default function AtomScene3D() {
           })
         }}
       >
-        <Suspense fallback={null}>
-          <AtomScene onFail={() => setFailed(true)} />
-        </Suspense>
+        <AtomScene onFail={() => setFailed(true)} />
       </Canvas>
     </div>
   )

@@ -27,6 +27,8 @@ declare global {
 }
 
 export default function Home() {
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+  const captchaConfigurationMissing = process.env.NODE_ENV === 'production' && !turnstileSiteKey
   const [address, setAddress] = useState('')
   const [expiresAt, setExpiresAt] = useState(0)
   const [emails, setEmails] = useState<Email[]>([])
@@ -49,6 +51,8 @@ export default function Home() {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
+    if (!turnstileSiteKey) return
+
     const script = document.createElement('script')
     script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
     script.async = true
@@ -58,23 +62,46 @@ export default function Home() {
     return () => {
       document.body.removeChild(script)
     }
-  }, [])
+  }, [turnstileSiteKey])
 
   const createInbox = async () => {
+    if (captchaConfigurationMissing) {
+      setError('Security verification is temporarily unavailable. Please try again later.')
+      return
+    }
+
+    const captchaToken = (!address && turnstileSiteKey && window.turnstile)
+      ? window.turnstile.getResponse() || ''
+      : ''
+    if (!address && turnstileSiteKey && !captchaToken) {
+      setError('Please complete the security verification before creating an address.')
+      return
+    }
+
     setLoading(true)
     setError('')
+    const controller = new AbortController()
+    const timeout = window.setTimeout(() => controller.abort(), 12_000)
     try {
-      const captchaToken = (!address && window.turnstile)
-        ? window.turnstile.getResponse() || ''
-        : ''
       const res = await fetch('/api/inbox', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
         body: JSON.stringify({ captchaToken }),
       })
-      const data = await res.json()
+      let data: { address?: string; expiresAt?: number; error?: string }
+      try {
+        data = await res.json()
+      } catch {
+        setError(`Server error (${res.status}). Please try again.`)
+        return
+      }
       if (!res.ok) {
         setError(data.error || 'Failed to create inbox')
+        return
+      }
+      if (!data.address || !data.expiresAt) {
+        setError('Invalid server response. Please try again.')
         return
       }
       setAddress(data.address)
@@ -87,8 +114,11 @@ export default function Home() {
       window.turnstile?.reset()
     } catch (err) {
       console.error('Failed to create inbox:', err)
-      setError('Network error. Please try again.')
+      setError((err as Error).name === 'AbortError'
+        ? 'Creating an address took too long. Please try again.'
+        : 'Network error. Please try again.')
     } finally {
+      window.clearTimeout(timeout)
       setLoading(false)
     }
   }
@@ -177,6 +207,8 @@ export default function Home() {
               loading={loading}
               error={error}
               onCreate={createInbox}
+              turnstileSiteKey={turnstileSiteKey}
+              captchaConfigurationMissing={captchaConfigurationMissing}
             />
           </Reveal>
         </div>
